@@ -20,14 +20,27 @@ The memory structure IS the interpretable world model, and it replaces the role 
 vision.md          — Core thesis, philosophy, what makes this different
 research/audit.md  — Comprehensive research audit (50+ systems, March 2026)
 design/            — Architecture and mechanism specifications
+journal/           — Evolution tracking (origins, timeline, deep entries)
 src/               — Implementation (when ready)
 ```
 
+## Evolution Tracking Rules
+
+**Every session working on this project must:**
+1. Update `journal/timeline.md` if a design decision was made, research changed direction, or thinking shifted
+2. Write a full `journal/entries/YYYY-MM-DD-title.md` entry if an insight or pivot occurred
+3. Update relevant `design/` docs when architecture changes
+4. Update `design/open-questions.md` — add new questions, mark resolved ones
+5. Update the memory file if the core thesis or status changes
+
+**Why:** This project's value is as much in the thinking evolution as in the final artifact. The journey from "better retrieval" to "cognitive substrate" to "interpretable world model" is itself a contribution. Track it.
+
 ## Status
 
-Concept + research phase. Design docs being drafted. No code yet.
+Concept + research phase. Design docs drafted. No code yet.
 
 ## Related
 
 - ~/the-companion/ — The Companion project (may adopt this as its memory architecture)
+- ~/claude-system/journal/ — Broader meta-system journal (cross-reference major milestones there too)
 - Memory file: ~/.claude/projects/-Users-wisdomhappy/memory/project_associative_memory_architecture.md

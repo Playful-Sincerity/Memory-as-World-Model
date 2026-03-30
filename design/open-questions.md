@@ -12,6 +12,73 @@
 
 - **Asymmetric associations:** Ice cream → motorcycles might be stronger than motorcycles → ice cream. How asymmetric should edges be? Two separate weights per direction?
 
+## Memory Encoding — What Becomes a Node? (Critical)
+
+The intake valve of the entire system. Currently unspecified.
+
+- **Current thinking:** Similar to how Claude Code builds markdown memory files — the human says something significant, or the agent itself decides to encode something.
+- **Granularity:** Every message? Every topic shift? Every "significant" moment?
+- **Who decides?** The LLM? A heuristic? Surprise-gating (Titans: only store what's unexpected)?
+- **Does encoding improve over time?** As the graph grows, more context for deciding what's new/important.
+
+## Anti-Hallucination Enforcement (Critical)
+
+The vision says the LLM ONLY answers from the graph. But LLMs always have pretrained knowledge. Prompt constraints aren't truly architectural.
+
+- **Possible approaches:**
+  - Minimal system prompt + only graph context (starve it of general knowledge)
+  - Verification layer: can the response be traced back to graph paths?
+  - Confidence gating: sparse graph coverage → "I don't know"
+  - Maybe a new kind of model needs to be trained — designed for graph-native reasoning rather than weight-based knowledge
+  - Maybe full enforcement isn't desirable — some pretrained reasoning IS appropriate (logic, math, language understanding)
+- **Key question:** Is this a spectrum rather than a binary? Where is pretrained knowledge appropriate vs. dangerous?
+
+## Confidence Threshold (Important)
+
+Two distinct dimensions:
+- **Comprehension:** "How well do I actually grasp this concept?" (depth of understanding)
+- **Completeness:** "Have I found everything in my memories relevant to this?" (coverage)
+
+Both should gate willingness to answer. Low on either → "I'm not sure" / "Let me look deeper."
+
+- How is confidence computed? Graph density in region? Path strength? Supporting node count?
+- Does confidence decay over time? (Knowledge you haven't revisited feels less certain)
+- "I know I don't know" vs. "I don't know what I don't know" — can the agent distinguish these?
+
+## Values / Care as Traversal Modulator (Important)
+
+How much the agent CARES determines traversal depth and computational budget.
+- High care → deep traversal, thorough search, research if needed
+- Low care → quickest path, surface answer, move on
+
+This is how biological attention works. Also elegantly solves the scale problem — budget is proportional to care, so you never fan out to millions of paths unless you deeply care.
+
+- Where do values come from? Trained? Configured? Emergent from the graph itself?
+- How does care interact with confidence? (Care a lot + low confidence → research. Don't care + low confidence → "I don't know" and move on.)
+- Is care about the topic, the person asking, the task, or all three?
+- Connection to The Companion's emotion modulator system (Damasio somatic markers)
+
+## Memory Priority — Ongoing Valuation (Important)
+
+Not static importance scoring. A living reassessment: "How much will I need this?"
+A memory's value changes depending on what the agent is doing NOW. Different kinds of memories have different priority levels.
+
+- Is priority computed at access time or maintained as a background process?
+- Does priority influence decay rate? (High-priority memories resist decay?)
+- How does this interact with the `protected` flag in the current data model?
+
+## Contradiction Handling
+
+What happens when the agent has contradictory memories, both reachable from focus?
+
+- **Possible approaches:**
+  - Temporal precedence (newer overrides older)
+  - Activation strength (stronger memory wins)
+  - Surface the contradiction explicitly ("I have conflicting information...")
+  - Fact invalidation (Graphiti-style: mark old as superseded, don't delete)
+- Can contradictions be productive? (Holding tension → deeper understanding)
+- Should consolidation resolve contradictions, or preserve them?
+
 ## Consciousness Pointer
 
 - **Single focus vs. multi-focus:** Is the agent "at" one node, or at a small set of nodes (like holding multiple things in working memory)?
@@ -19,6 +86,10 @@
 - **Momentum:** Should the focus have inertia? If you've been in one area of the graph for a while, it should take more activation energy to shift focus to a distant area. Prevents context thrashing.
 
 - **History:** Should the consciousness pointer remember where it's been recently? A "trail" that influences which branches feel more natural to return to?
+
+- **Movement logic:** Is focus always the last target node? What about meandering conversations with no clear target?
+
+- **During consolidation:** Does focus move through the graph during "sleep"? (Replay)
 
 ## Pruning
 
