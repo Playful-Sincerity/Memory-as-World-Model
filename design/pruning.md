@@ -1,131 +1,217 @@
 # Active Pruning
 
+Aligned with the Three Planes architecture (see architecture.md).
+
 ## The Principle
 
-Context is finite. The agent can't hold its entire graph in working memory.
-Pruning isn't failure — it's attention. What's in awareness is what's reachable from the current focus. Everything else exists but isn't active.
+A tree has a budget. As it grows, it can't keep every branch rendered.
+Pruning is how the tree manages its budget — shedding branches that are no longer relevant to make room for new growth. Pruning is attention: what's rendered is what the agent is thinking about. Everything else is dark in the matrix but still there.
+
+Pruning does NOT modify the matrix. A pruned branch just stops being rendered. The nodes and edges remain. If the tree grows back toward that region, the branch can re-render.
 
 ## How Pruning Works
 
-### Distance-From-Focus Scoring
+### Eviction Scoring
 
-Every node in active context has a distance score:
+Every rendered node gets an eviction score. Higher score = more likely to be evicted.
 
 ```python
-def compute_distance(
+def compute_eviction_score(
     node_id: str,
-    focus_id: str,
-    graph: MemoryGraph,
-    activation_map: dict[str, float],
+    tree: Tree,
+    value_system: ValueSystem,
+    context: CognitiveContext,
 ) -> float:
     """
-    Distance = inverse of activation from focus.
-    High activation = close to focus = stays in context.
-    Low activation = far from focus = candidate for eviction.
+    Eviction score = how expendable is this node right now?
+
+    Two factors:
+    1. Distance from active tips (far = expendable)
+    2. Priority from value system (high priority = resist eviction)
+
+    This is the key integration with the value system:
+    a distant but high-priority node stays. A close but low-priority one can go.
     """
-    return 1.0 / max(activation_map.get(node_id, 0.001), 0.001)
+    # Distance: inverse of activation level (low activation = far from tips)
+    activation = tree.activation_map.get(node_id, 0.0)
+    distance = 1.0 / max(activation, 0.001)
+
+    # Priority: from value system (contextual, dynamic)
+    priority = value_system.compute_priority(node_id, context)
+
+    # Eviction score: high distance AND low priority = evict first
+    return distance * (1.0 / max(priority, 0.01))
 ```
 
-### Eviction Policy
+### Per-Tree Pruning
 
-When a new node needs to enter context but budget is full:
+Each tree prunes independently within its budget:
 
-```
-1. Score all active nodes by distance from current focus
-2. Evict the most distant node
-3. If the evicted node has nodes that are ONLY reachable through it,
-   those become candidates too (branch detachment)
-4. Evicted nodes remain in the graph — they just leave context
-5. If focus shifts back toward them, they reload
+```python
+def prune_tree(
+    tree: Tree,
+    matrix: MemoryGraph,
+    value_system: ValueSystem,
+    context: CognitiveContext,
+):
+    """
+    Prune a tree until it's within budget.
+    Evicts highest-scoring nodes. Detaches orphaned branches.
+    Leaves phantom traces for pruned branches.
+    """
+    while tree.tokens_used > tree.token_budget:
+        # Score all rendered nodes (except root — never evict the root)
+        scores = {
+            nid: compute_eviction_score(nid, tree, value_system, context)
+            for nid in tree.rendered_nodes
+            if nid != tree.root_id
+        }
+
+        # Evict the most expendable node
+        evict_id = max(scores, key=scores.get)
+        tree.rendered_nodes.remove(evict_id)
+
+        # Leave a phantom trace (faint marker for faster re-growth)
+        tree.phantom_traces.append(evict_id)
+
+        # Check for branch detachment
+        orphaned = find_orphaned_nodes(evict_id, tree, matrix)
+        for orphan_id in orphaned:
+            tree.rendered_nodes.remove(orphan_id)
+            tree.phantom_traces.append(orphan_id)
+
+        # Recalculate token usage
+        tree.tokens_used = estimate_tokens(tree.rendered_nodes)
 ```
 
 ### Branch Detachment
 
-This is the tree-like behavior. When a node evicts, check if it was the only connection to a subtree:
+When a node is evicted, check if it was the only connection to a sub-branch:
 
 ```python
-def detach_branch(
+def find_orphaned_nodes(
     evicted_id: str,
-    active_nodes: set[str],
-    graph: MemoryGraph,
+    tree: Tree,
+    matrix: MemoryGraph,
 ) -> set[str]:
     """
-    When a node is evicted, find any nodes that are now
-    unreachable from the focus through remaining active nodes.
-    These form a detached branch — all evicted together.
+    Find nodes that are no longer reachable from the tree root
+    through remaining rendered nodes. These form a detached branch.
     """
-    # Remove evicted node
-    remaining = active_nodes - {evicted_id}
+    remaining = set(tree.rendered_nodes)
 
-    # Find nodes only reachable through the evicted node
-    reachable_from_focus = bfs_reachable(
-        graph, focus_id, within=remaining
+    reachable = bfs_reachable(
+        matrix,
+        start=tree.root_id,
+        within=remaining,
     )
 
-    orphaned = remaining - reachable_from_focus
-    return orphaned  # All of these evict too
+    orphaned = remaining - reachable - {tree.root_id}
+    return orphaned
 ```
 
-### Re-attachment
+## Phantom Traces
 
-Detached branches aren't gone. They re-attach when:
-- Focus shifts toward them (spreading activation reaches them again)
-- New input is near them in embedding space
-- A newly traversed edge connects to them
+When a branch prunes, it doesn't vanish without a trace. The tree retains a **phantom** — a lightweight marker that says "there was something here."
 
-This is the "breathing" quality — the context tree grows and shrinks as focus moves.
+Phantoms serve two purposes:
+1. **Faster re-growth:** If the tree grows back toward a phantom, it can skip the embedding search and go directly to the known node. Re-attachment is faster than first-time discovery.
+2. **Awareness of gaps:** The mirror layer can observe phantoms and know "I had something relevant here but let it go." This creates the "tip of the tongue" feeling — knowing you know something without it being in active awareness.
+
+```python
+@dataclass
+class PhantomTrace:
+    node_id: str                     # The pruned node
+    pruned_at: datetime
+    activation_at_pruning: float     # How active it was when pruned
+    tree_id: str                     # Which tree pruned it
+
+    # Phantoms decay too — eventually you forget you forgot
+    def is_expired(self, now: datetime) -> bool:
+        hours_since = (now - self.pruned_at).total_seconds() / 3600
+        return hours_since > PHANTOM_LIFETIME_HOURS
+```
+
+## Multi-Tree Budget Management
+
+The global context budget is shared across all active trees via TreeManager.
+
+```
+Total budget: 100K tokens (example)
+
+Primary tree:    60K (high care topic)
+Spawned tree A:  25K (moderate exploration)
+Spawned tree B:  10K (quick check)
+Mirror overhead:  5K (meta-observation)
+```
+
+When a new tree is spawned, the budget is rebalanced:
+
+```python
+def rebalance_budgets(tree_manager: TreeManager):
+    """
+    Redistribute the global budget across active trees.
+    Primary tree always gets the largest share.
+    Spawned trees share the remainder, weighted by care.
+    """
+    total = tree_manager.total_token_budget
+    primary = [t for t in tree_manager.active_trees if t.tree_type == "primary"][0]
+    spawned = [t for t in tree_manager.active_trees if t.tree_type == "spawned"]
+
+    # Primary gets at least 50%
+    primary.token_budget = max(total // 2, total - sum(s.token_budget for s in spawned))
+
+    # Remainder split among spawned trees
+    remainder = total - primary.token_budget
+    if spawned:
+        per_spawned = remainder // len(spawned)
+        for s in spawned:
+            s.token_budget = per_spawned
+
+    # If any tree is now over budget, prune it
+    for tree in tree_manager.active_trees:
+        if tree.tokens_used > tree.token_budget:
+            prune_tree(tree, ...)
+```
 
 ## Distance-Proportional Compression
 
-Not all nodes in context need full detail:
+Not all rendered nodes need full detail. Distance from the active tips determines compression:
 
-| Distance from Focus | Representation | Token Cost |
-|--------------------|---------------|------------|
-| Focus node | Full verbatim content | High |
-| 1 hop | Lightly compressed | Medium |
-| 2 hops | Heavy compression (gist) | Low |
-| 3+ hops | One-line summary only | Minimal |
+| Position in Tree | Representation | Token Cost |
+|-----------------|---------------|------------|
+| Tips (active growth front) | Full verbatim content | High |
+| 1 hop from tips | Summary | Medium |
+| 2 hops from tips | Truncated summary | Low |
+| 3+ hops (near root) | Tags/type only | Minimal |
 
-```python
-def compress_for_context(
-    node: MemoryNode,
-    hops_from_focus: int,
-) -> str:
-    """Return node content at appropriate compression level."""
-    if hops_from_focus == 0:
-        return node.content                    # Full content
-    elif hops_from_focus == 1:
-        return node.summary                    # Summary field
-    elif hops_from_focus == 2:
-        return truncate(node.summary, 100)     # Truncated summary
-    else:
-        return f"[{node.node_type}: {', '.join(node.tags)}]"  # Tags only
-```
+This means the root (identity core) gets compressed to its essence after the tree grows deep enough. That's correct — your identity shapes the tree's initial direction but doesn't need to occupy the full budget once the branches have grown.
 
-## Graduated Pressure (from Pichay research)
+## Graduated Pressure Zones
 
-As context fills, eviction becomes more aggressive:
+As total context fills across all trees, pruning becomes more aggressive:
 
-| Zone | Context Usage | Behavior |
-|------|-------------|----------|
-| Normal | < 60% | No pressure. Load freely. |
-| Advisory | 60-80% | Compress distant nodes. Warn before loading large content. |
-| Involuntary | 80-95% | Evict weakest branches. Only load high-activation nodes. |
-| Aggressive | > 95% | Hard eviction. Only focus node + 1-hop remain verbatim. |
+| Zone | Total Usage | Behavior |
+|------|------------|----------|
+| Normal | < 60% | No pressure. Trees grow freely. |
+| Advisory | 60-80% | Compress distant branches. New spawned trees get smaller budgets. |
+| Involuntary | 80-95% | Kill lowest-care spawned trees. Primary tree prunes aggressively. |
+| Aggressive | > 95% | Only primary tree survives. Only tips + 1-hop remain verbatim. |
 
-## Edge Decay (Background)
+## Re-attachment
 
-Edges that are never traversed weaken over time:
+When a tree's growth reaches a phantom trace, the branch re-attaches:
 
 ```python
-def decay_edges(graph: MemoryGraph, now: datetime):
-    """Run periodically. Weaken unused edges. Remove dead ones."""
-    for edge in graph.all_edges():
-        days_unused = (now - edge.last_traversed).days
-        edge.weight *= (1.0 - edge.decay_rate) ** days_unused
-
-        if edge.weight < EDGE_DEATH_THRESHOLD:
-            graph.remove_edge(edge)  # Association forgotten
+def check_phantom_reattach(tree: Tree, new_node_id: str):
+    """
+    When growth reaches a phantom, re-render the pruned branch
+    instantly instead of re-discovering it through traversal.
+    """
+    if new_node_id in [p.node_id for p in tree.phantom_traces]:
+        # Fast re-attachment — skip embedding search
+        phantom = get_phantom(tree, new_node_id)
+        tree.rendered_nodes.append(new_node_id)
+        tree.phantom_traces.remove(phantom)
+        # The branch is back. No new matrix edges needed.
 ```
-
-This prevents the graph from growing unboundedly. Associations that were created but never reinforced naturally fade — just like human memory.

@@ -1,8 +1,12 @@
 # Origins — How This Idea Was Born
 
-## The Starting Point: The Companion's Memory Plan
+## The Long Incubation (~Dec 2025 – Mar 2026)
 
-This project didn't start from scratch. It grew out of The Companion project (~/the-companion/), which already had a detailed memory system plan:
+Wisdom had been thinking about how to build the best memory structures for AI agents for roughly 3-4 months before this project formally took shape. The question wasn't academic — it was practical: how should an autonomous AI being (The Companion) actually remember, associate, and think through its experiences?
+
+This wasn't idle speculation. It was sustained, ongoing thinking about the fundamental problem: existing memory approaches (RAG, knowledge graphs, flat retrieval) didn't feel right. They treated memory as a database to query, not as the structure through which a mind works. The intuition that something deeper was possible had been developing over months of working with AI systems and thinking about cognition.
+
+The Companion project (~/the-companion/) became a concrete context for this thinking. Its memory plan was detailed and sophisticated:
 
 - Four stores: episodic, semantic, procedural, prospective + working memory
 - Consolidation cycles modeled on sleep
@@ -10,11 +14,11 @@ This project didn't start from scratch. It grew out of The Companion project (~/
 - A metamemory index ("know what you know")
 - A vision of "mind as memory graph" with "LLM as traversal engine"
 
-The Companion plan was sophisticated but still fundamentally a **retrieve-then-load** system. There was a retrieval pipeline: extract cues → query metamemory → rank by activation → load into context. The memory system served the cognition — it was a resource the agent consulted.
+The Companion plan was strong — but it was still fundamentally a **retrieve-then-load** system. There was a retrieval pipeline: extract cues → query metamemory → rank by activation → load into context. The memory system served the cognition — it was a resource the agent consulted. Wisdom's months of thinking had been circling around something beyond this.
 
-## The Shift: March 29, 2026
+## The Crystallization: March 29, 2026
 
-During a conversation about The Companion, Wisdom described something different. Not a better retrieval system — a different relationship between memory and cognition entirely.
+On March 29, during a conversation about The Companion's memory architecture, the months of incubation found its form. Wisdom articulated the vision clearly for the first time — not as a new idea, but as something that had been developing and finally came together.
 
 ### The Initial Description
 
@@ -76,8 +80,10 @@ And practical building blocks:
 
 ## The Core Thesis
 
-Crystallized on March 29, 2026:
+The months of thinking crystallized into words on March 29, 2026:
 
 **"The memory structure IS the interpretable world model, and it replaces the role that pretrained weights currently play in forming beliefs and understanding."**
 
 This is not a memory system. It is a cognitive substrate — the medium through which an AI being experiences its own history and constructs its understanding of reality.
+
+The idea was always heading here. The Companion was the context that made it concrete.

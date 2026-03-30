@@ -17,11 +17,18 @@ The memory structure IS the interpretable world model, and it replaces the role 
 ## Project Structure
 
 ```
-vision.md          — Core thesis, philosophy, what makes this different
-research/audit.md  — Comprehensive research audit (50+ systems, March 2026)
-design/            — Architecture and mechanism specifications
-journal/           — Evolution tracking (origins, timeline, deep entries)
-src/               — Implementation (when ready)
+vision.md                    — Core thesis, philosophy, what makes this different
+research/audit.md            — Comprehensive research audit (50+ systems, March 2026)
+research/targeted-research-round2.md — Deep answers to 5 core design questions
+design/architecture.md       — Five-layer architecture overview
+design/data-model.md         — Node/edge/consciousness dataclasses + SQLite schema
+design/traversal.md          — Spreading activation algorithm + Hebbian strengthening
+design/pruning.md            — Distance-from-focus eviction, branch detachment, compression
+design/consolidation.md      — Episodic→semantic promotion, merging, connection discovery
+design/value-system.md       — Care, confidence, priority as unified motivational layer
+design/open-questions.md     — Unresolved design challenges (actively explored)
+journal/                     — Evolution tracking (origins, timeline, deep entries)
+src/                         — Implementation (when ready)
 ```
 
 ## Evolution Tracking Rules

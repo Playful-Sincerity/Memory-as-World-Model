@@ -33,39 +33,16 @@ The vision says the LLM ONLY answers from the graph. But LLMs always have pretra
   - Maybe full enforcement isn't desirable — some pretrained reasoning IS appropriate (logic, math, language understanding)
 - **Key question:** Is this a spectrum rather than a binary? Where is pretrained knowledge appropriate vs. dangerous?
 
-## Confidence Threshold (Important)
+## Value System — Care, Confidence, Priority (→ design/value-system.md)
 
-Two distinct dimensions:
-- **Comprehension:** "How well do I actually grasp this concept?" (depth of understanding)
-- **Completeness:** "Have I found everything in my memories relevant to this?" (coverage)
+Promoted to full design doc. See [value-system.md](value-system.md) for the unified motivational layer design.
 
-Both should gate willingness to answer. Low on either → "I'm not sure" / "Let me look deeper."
-
-- How is confidence computed? Graph density in region? Path strength? Supporting node count?
-- Does confidence decay over time? (Knowledge you haven't revisited feels less certain)
-- "I know I don't know" vs. "I don't know what I don't know" — can the agent distinguish these?
-
-## Values / Care as Traversal Modulator (Important)
-
-How much the agent CARES determines traversal depth and computational budget.
-- High care → deep traversal, thorough search, research if needed
-- Low care → quickest path, surface answer, move on
-
-This is how biological attention works. Also elegantly solves the scale problem — budget is proportional to care, so you never fan out to millions of paths unless you deeply care.
-
-- Where do values come from? Trained? Configured? Emergent from the graph itself?
-- How does care interact with confidence? (Care a lot + low confidence → research. Don't care + low confidence → "I don't know" and move on.)
-- Is care about the topic, the person asking, the task, or all three?
-- Connection to The Companion's emotion modulator system (Damasio somatic markers)
-
-## Memory Priority — Ongoing Valuation (Important)
-
-Not static importance scoring. A living reassessment: "How much will I need this?"
-A memory's value changes depending on what the agent is doing NOW. Different kinds of memories have different priority levels.
-
-- Is priority computed at access time or maintained as a background process?
-- Does priority influence decay rate? (High-priority memories resist decay?)
-- How does this interact with the `protected` flag in the current data model?
+**Remaining open questions (from value-system.md):**
+- Can the agent learn what to care about from experience, or must values be configured?
+- Care conflicts: what when the agent cares about two contradictory things?
+- Confidence calibration: avoiding overconfidence AND underconfidence
+- Priority horizon: how far ahead does predicted_future_utility look?
+- Value drift: should values evolve over time, or should some be immutable? (Alignment implications)
 
 ## Contradiction Handling
 
@@ -79,17 +56,16 @@ What happens when the agent has contradictory memories, both reachable from focu
 - Can contradictions be productive? (Holding tension → deeper understanding)
 - Should consolidation resolve contradictions, or preserve them?
 
-## Consciousness Pointer
+## Consciousness Pointer → RESOLVED: Trees
 
-- **Single focus vs. multi-focus:** Is the agent "at" one node, or at a small set of nodes (like holding multiple things in working memory)?
+The "consciousness pointer" concept was retired in favor of the Three Planes model.
+The agent isn't a cursor in the graph — it IS the whole system. Active cognition = trees growing within the matrix.
 
-- **Momentum:** Should the focus have inertia? If you've been in one area of the graph for a while, it should take more activation energy to shift focus to a distant area. Prevents context thrashing.
-
-- **History:** Should the consciousness pointer remember where it's been recently? A "trail" that influences which branches feel more natural to return to?
-
-- **Movement logic:** Is focus always the last target node? What about meandering conversations with no clear target?
-
-- **During consolidation:** Does focus move through the graph during "sleep"? (Replay)
+- Single vs multi-focus → **resolved:** Multiple parallel trees. Primary tree + spawned trees.
+- Momentum → **resolved:** Trees have inertia through their root and rendered structure. Shifting requires growing a new branch or spawning a new tree — that IS the cost.
+- History → **resolved:** Phantom traces. Pruned branches leave markers. The mirror layer remembers traversal patterns as meta-memories.
+- Movement logic → **resolved:** Tips of the tree are the active front. Trees grow toward inputs, not "move to" them.
+- During consolidation → **resolved:** Consolidation runs when no trees are active (between interactions). A consolidation tree can be spawned for replay.
 
 ## Pruning
 
