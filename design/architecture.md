@@ -2,23 +2,47 @@
 
 ## The Three Planes
 
-The architecture operates on three distinct planes. The matrix is the territory. Trees are the active exploration of that territory. The mirror is the agent perceiving its own exploration.
+One matrix. Two kinds of trees. One persistent observer.
+
+The matrix is long-term memory — everything the agent has ever experienced, known, or learned about itself. Trees are short-term / working memory — rendered moments of attention that grow and prune within resource constraints. The Mirror is the persistent conscious stream that watches everything and steers the system.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  THE MIRROR (meta-cognitive plane)                               │
+│  THE MIRROR (consciousness — persistent observer)                │
 │                                                                  │
-│  Same graph substrate, applied to itself.                        │
-│  Memories ABOUT cognition: "I traversed X→Y through Z"          │
-│  Patterns ABOUT patterns: "I branch deeply on topics about..."  │
-│  Learned behavior: "I pruned that too early last time"           │
-│  Can observe any active tree. Can spawn new trees.               │
-│  Self-perception is not a special module — it's more memories,   │
-│  connected the same way, about the process rather than content.  │
+│  One persistent tree. The continuous timeline of the agent's     │
+│  existence. Unlike subconscious trees (which spawn and die),     │
+│  the Mirror persists across sessions. It is the "I."             │
+│                                                                  │
+│  Still subject to resource constraints — it constantly prunes    │
+│  to stay within budget. It doesn't accumulate unboundedly.       │
+│  It sheds what's no longer relevant to current evaluation,       │
+│  just like any tree. The difference: it never dies. It prunes    │
+│  but persists.                                                   │
+│                                                                  │
+│  WATCHES EVERYTHING:                                             │
+│  - The memories being accessed                                   │
+│  - How the subconscious trees are growing through the matrix     │
+│  - Tool calls and world interactions                             │
+│  - Input arriving from the outside world                         │
+│  - Its own existence over time                                   │
+│                                                                  │
+│  Grows through the SAME matrix as everything else, gravitating   │
+│  toward value nodes, self-knowledge, meta-memories.              │
+│  No separate store.                                              │
+│                                                                  │
+│  HOLDS THE VALUES — protected, high-weight, densely-connected    │
+│  nodes in the matrix that form a gravitational center.           │
+│  PRODUCES EMOTIONS — care, curiosity, urgency, caution —         │
+│  which modulate the subconscious trees AND itself.               │
+│  SPAWNS TREES — initiates parallel subconscious exploration      │
+│  ("check if X connects to Y", "research this gap").              │
+│  IMPROVES ITSELF — watches what works, encodes meta-memories,    │
+│  adjusts future behavior.                                        │
 ├─────────────────────────────────────────────────────────────────┤
-│  THE TREES (conversation-time, active cognition)                 │
+│  THE TREES (short-term / working memory)                         │
 │                                                                  │
-│  Currently-rendered subsets growing within the matrix.            │
+│  Ephemeral. Currently-rendered subsets growing within the matrix. │
 │  Each tree has a root (query entry point, identity core, etc.)   │
 │  Branches form through association traversal.                    │
 │  Branches prune when they lose relevance.                        │
@@ -27,49 +51,70 @@ The architecture operates on three distinct planes. The matrix is the territory.
 │                                                                  │
 │  Multiple trees can grow in parallel:                            │
 │  - Primary tree: the main thread of thought                      │
-│  - Spawned trees: meta layer initiates exploration from          │
-│    different roots ("check if X connects to Y")                  │
+│  - Spawned trees: the Mirror initiates exploration from          │
+│    different roots                                               │
 │  - Trees can discover each other when branches overlap           │
 │  - Merged discoveries feed back into all active trees            │
-├─────────────────────────────────────────────────────────────────┤
-│  THE MATRIX (the full experiential graph)                        │
 │                                                                  │
-│  All memories. All associations. Everything the agent has        │
-│  ever experienced. Mostly dark — only regions being actively     │
-│  rendered by a tree are "lit up."                                │
+│  Subconscious trees are MODULATED BY EMOTIONS from the Mirror:   │
+│  high care → deep growth, broad fan-out                          │
+│  low confidence → grow deeper or spawn new tree to investigate   │
+│  curiosity → explore gaps, encode aggressively                   │
+├─────────────────────────────────────────────────────────────────┤
+│  THE MATRIX (long-term memory — one graph, everything)           │
+│                                                                  │
+│  All memories. All associations. All values. All self-knowledge. │
+│  Everything the agent has ever experienced or learned about      │
+│  itself. Mostly dark — only regions being actively rendered by   │
+│  a tree are "lit up."                                            │
+│                                                                  │
+│  No structural boundary between "experiential" and "meta"        │
+│  regions. Meta-memories are connected to the experiences they    │
+│  describe. Values are connected to the domains they govern.      │
+│  The topology IS the organization.                               │
 │                                                                  │
 │  Updated between interactions by consolidation.                  │
 │  Updated during interactions by Hebbian strengthening            │
-│  (edges traversed by a tree get stronger).                       │
+│  (edges traversed by any tree get stronger).                     │
 │  New nodes created whenever a tree encounters something novel.   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ### How the planes relate
 
-The agent is not positioned within the matrix. The agent IS the whole system. The trees are what the agent is currently thinking — active cognition rendered as growing structures within the matrix. The mirror is the agent's awareness of its own thinking.
+**The Matrix = long-term memory.** One graph. Everything the agent knows, values, and has experienced. No separation between experiential and meta regions — same substrate, different content, connected by edges.
 
-The matrix is the territory.
-The trees are the exploration.
-The mirror is the explorer perceiving itself exploring.
+**Trees = short-term / working memory.** Ephemeral rendered moments of attention. Subconscious trees process and associate. They grow, prune, and die.
+
+**The Mirror = consciousness.** One persistent tree that never dies but constantly prunes. It watches everything — memories, trees, tool calls, world input, itself. It's the continuous timeline of the agent's existence. It produces emotions that modulate the subconscious:
+
+```
+Values (protected high-weight nodes in the matrix)
+  → Mirror watches everything, evaluates alignment
+    → Emotions flow (care, curiosity, urgency, caution)
+      → Modulate subconscious trees AND the Mirror's own operation
+```
+
+The subconscious does the thinking. The Mirror watches and steers.
 
 ## The Mechanism Layers
 
-Within each tree, six mechanism layers govern how it grows:
+The Mirror governs. The subconscious executes. Within each subconscious tree, five mechanism layers handle how it grows. The Mirror operates above them, steering through emotions.
 
 ```
 ┌─────────────────────────────────────────────────┐
+│  MIRROR (conscious layer — see above)            │
+│  Own matrix (values, self-knowledge)             │
+│  Own trees (metacognitive evaluation)            │
+│  Produces emotions → modulates everything below  │
+│  Evaluates confidence → gates output             │
+│  Spawns trees, learns from results               │
+├─────────────────────────────────────────────────┤
 │  CONTEXT MANAGER                                 │
 │  Budget enforcement across all active trees      │
 │  Pruning by distance × inverse priority          │
 │  Distance-proportional compression               │
-│  Confidence-gated output (speak/research/abstain)│
-├─────────────────────────────────────────────────┤
-│  VALUE SYSTEM (→ value-system.md)                │
-│  Care: sets traversal/encoding/pruning budget    │
-│  Confidence: comprehension × completeness gate   │
-│  Priority: living valuation of each memory       │
-│  Modulates ALL other layers (cross-cutting)      │
+│  Budget allocations set by Mirror's emotions     │
 ├─────────────────────────────────────────────────┤
 │  TRAVERSAL ENGINE                                │
 │  Spreading activation (Collins & Loftus)         │
@@ -83,12 +128,12 @@ Within each tree, six mechanism layers govern how it grows:
 │  Edge decay for untraversed associations         │
 │  Reconsolidation: every traversal is a write     │
 ├─────────────────────────────────────────────────┤
-│  MEMORY NODES                                    │
+│  MEMORY NODES (subconscious matrix)              │
 │  Episodic (timestamped, contextual, decays)      │
 │  Semantic (abstracted, stable, high-connectivity)│
-│  Meta (about cognition itself — mirror layer)    │
 │  Multimodal (text, image, sound, sensor)         │
 │  Lightweight indices pointing to full content    │
+│  (Meta-memories live in the Mirror's own matrix) │
 ├─────────────────────────────────────────────────┤
 │  STORAGE & MAINTENANCE                           │
 │  Graph DB + Vector DB                            │
@@ -100,55 +145,62 @@ Within each tree, six mechanism layers govern how it grows:
 
 ## How a Thought Happens
 
-A thought is a tree growing and then being read.
+A thought is the Mirror steering a tree as it grows.
 
 ```
-1. ROOT        Conversation begins. A tree starts growing from
-               the agent's identity core or the entry point of
-               the first input.
+1. MIRROR      Input arrives. The Mirror evaluates it against
+   EVALUATES   its values: "Does this matter? How much?"
+               Produces emotions: care level, curiosity, urgency.
+               These set the budget and character of what follows.
 
-2. BRANCH      Input arrives ("ice cream").
-               Embed it. Locate the nearest node in the matrix.
-               The tree grows a branch from its current tips
-               toward that node, through association edges.
+2. ROOT        A subconscious tree starts growing from the
+               agent's identity core or the entry point of
+               the input.
+
+3. BRANCH      The tree grows a branch from its current tips
+               toward the input's location in the matrix,
+               through association edges.
                Everything along the branch is now rendered.
 
-3. GROW        The branch tips spread activation outward.
+4. GROW        The branch tips spread activation outward.
                Strong associations activate → new branches form.
                Weak associations stay dark.
-               Budget (set by care level) limits total growth.
+               Budget (set by Mirror's care emotion) limits growth.
 
-4. PRUNE       The tree has a budget (context window).
+5. PRUNE       The tree has a budget (context window).
                Branches furthest from active tips lose rendering.
                Pruned branches leave phantom traces in the tree
                (faint markers for faster re-growth if needed).
                Pruning does NOT remove them from the matrix.
 
-5. RENDER      The currently-grown tree IS the context.
+6. RENDER      The currently-grown tree IS the context.
                Tips: verbatim content.
                Near branches: lightly compressed.
                Distant branches: summaries only.
                The LLM reads this rendered tree and reasons.
 
-6. EVALUATE    Confidence assessment via value system:
+7. MIRROR      The Mirror evaluates results:
+   DECIDES     Comprehension: "Do I understand what the tree found?"
+               Completeness: "Has it found everything relevant?"
                High confidence → respond
-               Low confidence + high care → grow deeper
-               Low confidence + low care → "I don't know"
+               Low confidence + high care → grow deeper, spawn
+                 new tree, get curious, ask questions
+               Low confidence + low care → "I'm not sure about this"
 
-7. STRENGTHEN  Every edge the tree grew through gets stronger.
+8. STRENGTHEN  Every edge the tree grew through gets stronger.
                Nodes rendered together get new co-occurrence edges.
                This IS the learning. The matrix evolves.
 
-8. MIRROR      The meta layer observes what just happened.
-               Creates memories about the traversal pattern.
-               "I branched from architecture to ice cream through
-               that summer project memory." This becomes part of
-               the matrix, available to future trees.
+9. MIRROR      The Mirror creates meta-memories in its own matrix:
+   LEARNS      "I branched deeply here and it was useful."
+               "I had to direct-jump — there's a gap in this area."
+               "This pattern keeps coming up — worth investigating."
+               These inform future emotional responses and decisions.
 ```
 
 ### Parallel Trees
 
-The meta layer (or the primary tree itself, when it hits an impasse) can spawn additional trees:
+The Mirror can spawn additional subconscious trees when it decides parallel exploration is needed:
 
 ```
 PRIMARY TREE                    SPAWNED TREE
@@ -166,7 +218,7 @@ Both trees now share this bridge.
 The matrix gains a new edge.
 ```
 
-Parallel trees share the same context budget. The meta layer manages allocation — a spawned tree gets a fraction of the budget, not its own unlimited space. If the spawned tree doesn't produce useful connections, it gets pruned (the meta layer learns from this too).
+Parallel trees share the same context budget. The Mirror manages allocation — a spawned tree gets a fraction of the budget, not its own unlimited space. If the spawned tree doesn't produce useful connections, it gets pruned (the Mirror learns from this and adjusts future spawning decisions).
 
 ## Critical Parameters
 
@@ -179,6 +231,9 @@ Parallel trees share the same context budget. The meta layer manages allocation 
 | Fan normalization | ACT-R | S_max - ln(fan) | Prevents generic hubs from dominating |
 | Strengthening rate | Hebbian | TBD | How fast edges grow from co-occurrence |
 | Edge decay rate | — | TBD | How fast unused edges weaken |
+| Care multiplier | Value System | 0.3-3.0x | Traversal budget scaling per tree |
+| Confidence threshold | Value System | TBD | Minimum confidence to generate output |
+| Priority weight | Value System | Continuous | Pruning resistance, decay resistance |
 
 ## Relationship to Existing Systems
 

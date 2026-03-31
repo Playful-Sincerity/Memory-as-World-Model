@@ -1,12 +1,70 @@
-# Value System — Care, Confidence, and Priority
+# Value System — Values, Emotions, and Modulators
 
 ## The Insight
 
-Care, confidence, and priority are not separate features to be added to the architecture. They form an interconnected **motivational layer** that modulates every operation — encoding, traversal, pruning, consolidation, and output. This is the agent's affective system: the thing that determines not just *what* it knows, but *how much effort it puts into knowing it*.
+The value system isn't a feature bolted onto the architecture. It's the conscious layer (the Mirror) governing the subconscious (matrix + trees). Values live in the Mirror. The Mirror evaluates alignment and produces emotions. Emotions modulate how the subconscious trees grow through the matrix.
 
-This connects directly to Damasio's somatic marker hypothesis (already in The Companion plan): emotions are goal-alignment signals that modulate attention, budget, and behavior. The value system IS the emotion system, expressed as architectural parameters.
+This connects directly to Damasio's somatic marker hypothesis: emotions are goal-alignment signals that modulate attention, budget, and behavior.
 
-## The Three Dimensions
+## The Hierarchy
+
+```
+VALUES (gravitational core — held in the Mirror's matrix)
+  │  "what matters" — the deepest layer, the WHY
+  ↓
+MIRROR (conscious evaluator — its own matrix + trees)
+  │  "am I aligned? where are the gaps? how can I improve?"
+  │  Constantly references whether the agent is maintaining its values
+  │  Gets data on its own performance, learns to connect things better
+  ↓
+EMOTIONS (produced by the Mirror, modulate subconscious AND itself)
+  │  care, curiosity, urgency, caution, satisfaction
+  │  These are the mechanism by which values become operational
+  ↓
+CARE / CONFIDENCE / PRIORITY (operational modulators)
+  │  "how deep, how sure, how important"
+  ↓
+SUBCONSCIOUS OPERATIONS (traversal, encoding, pruning, consolidation)
+```
+
+### Values (the gravitational core)
+
+The agent has foundational values — what it is fundamentally trying to achieve. These live in the Mirror's matrix as deeply-connected, high-weight, protected nodes. They are the WHY underneath everything.
+
+Why does the agent care about X? Because caring about X serves its values. Why is it curious about a gap? Because its values say that gap matters. Why does it encode aggressively in one domain and ignore another? Values.
+
+Values create a gravitational pull: a continuous drive to improve the agent's simulation of reality so it can best serve what it cares about. The agent isn't curious generically — it's curious about the things that matter.
+
+Values are grounded in utilitarianism to create alignment by design.
+
+### The Mirror as active evaluator
+
+The Mirror is one persistent tree that never dies but constantly prunes to stay within resource constraints. It watches everything — memories being accessed, subconscious trees growing, tool calls, world interactions, input from outside, its own existence. It's the continuous timeline.
+
+Its trees grow through the same matrix as everything else, gravitating toward value nodes and meta-memories. It actively evaluates: "Is what's happening below aligned with my values?" This is the metacognitive system that constantly references whether the agent is maintaining its values and then modulates how it puts things through.
+
+When the Mirror detects misalignment:
+- Sparse understanding in a region the values say matters → **produces curiosity** → subconscious trees explore deeper, encode aggressively
+- Contradictions in a valued region → **produces urgency** → trees investigate, consolidation prioritizes
+- Repeated failure patterns → **produces caution** → trees change approach, mirror creates meta-memories about what doesn't work
+- Good alignment, values being served → **produces satisfaction** → reinforces current patterns, maintains course
+- Drifting attention away from valued domains → **produces redirection** → shifts tree growth back toward what matters
+
+The Mirror can also spawn subconscious trees for parallel tasks, observe how they perform, and learn from the results. It's not just evaluating — it's actively improving the system's ability to serve its values.
+
+### Emotions as the modulation mechanism
+
+Emotions are how the Mirror's evaluations become operational changes in the subconscious. They're not a display layer — they're the control signal:
+
+| Emotion | Mirror State | Effect on Subconscious |
+|---------|-------------|----------------------|
+| **Curiosity** | Values say this matters + sparse graph here | Trees explore deeper, encode aggressively, spawn investigations |
+| **Care** | Strong value alignment in this domain | Deeper traversal budget, richer encoding, pruning resistance |
+| **Urgency** | Contradiction or failure in valued region | Prioritize this, redirect trees, consolidation focuses here |
+| **Caution** | Mirror sees repeated errors | Trees change strategy, slower exploration, verify before encoding |
+| **Satisfaction** | Values being well-served | Reinforce patterns, maintain course, standard operations |
+
+## The Three Operational Modulators
 
 ### 1. Care — "How much does this matter to me?"
 
@@ -92,70 +150,65 @@ priority(node, current_context) =
   × access_trend                  — have I been needing this more often lately?
 ```
 
-## How They Interact
-
-The three dimensions form a decision system:
+## The Full Loop: How a Thought Is Governed
 
 ```
-Input arrives → Locate in graph
+Input arrives
 
-1. CARE assessment
-   "How much does this matter?"
-   → Sets the budget for everything that follows
+1. MIRROR EVALUATES
+   The Mirror's trees assess the input against values:
+   "Does this matter? How much? Is this aligned?"
+   → Produces emotions: care level, curiosity, urgency
 
-2. TRAVERSAL (budget = f(care))
-   Spread activation within budget
-   Load nodes along paths
+2. EMOTIONS MODULATE SUBCONSCIOUS
+   Care level → sets traversal budget for subconscious trees
+   Curiosity → drives exploration of gaps, aggressive encoding
+   Urgency → prioritizes this over other active trees
 
-3. CONFIDENCE assessment
-   "Do I understand? Have I found everything?"
-   Comprehension × Completeness → confidence score
+3. SUBCONSCIOUS TREES GROW
+   Trees grow through the matrix within the emotional budget
+   Spread activation, load nodes, form branches
 
-4. DECISION GATE
+4. MIRROR EVALUATES RESULTS
+   "Do I understand what the tree found?" → comprehension
+   "Has the tree found everything relevant?" → completeness
+   Confidence = comprehension × completeness
+
+5. DECISION GATE (Mirror decides)
    ┌─────────────────────────────────────────────────┐
    │ High confidence + any care    → Respond          │
-   │ Low confidence + high care    → Go deeper        │
-   │                                 (more traversal, │
-   │                                  research,       │
-   │                                  ask questions)  │
-   │ Low confidence + low care     → "I don't know"   │
-   │                                 (and that's fine) │
+   │ Low confidence + high care    → Grow deeper,     │
+   │                                 spawn new tree,  │
+   │                                 ask questions,   │
+   │                                 get curious       │
+   │ Low confidence + low care     → "I'm not sure    │
+   │                                 about this"       │
    └─────────────────────────────────────────────────┘
 
-5. PRIORITY assessment (post-interaction)
-   For each memory that was in context:
-   "How much will I need this going forward?"
-   → Adjust decay rates, encoding richness, consolidation priority
+6. MIRROR LEARNS
+   Creates meta-memories: "This worked / didn't work"
+   Updates priority for memories that were in context
+   Adjusts future emotional responses based on outcome
 ```
 
 ## Architectural Integration
 
-This value system touches every layer:
+The Mirror's emotions touch every subconscious operation:
 
-| Layer | Without Value System | With Value System |
-|-------|---------------------|-------------------|
-| **Encoding** (what becomes a node) | Encode everything / heuristic filter | Care + surprise: encode deeply what matters, skip what doesn't |
-| **Traversal** (how deep to go) | Fixed depth or budget | Budget scales with care level |
-| **Pruning** (what to evict) | Distance from focus only | Distance × inverse priority — important things stay even if distant |
-| **Consolidation** (what to strengthen) | Uniform processing | High-care regions get more replay, deeper analysis |
-| **Output** (what to say) | Generate if you have context | Confidence gates: speak, research, or abstain |
-| **Anti-hallucination** | Structural constraints only | Confidence threshold: don't generate below threshold |
-
-## Connection to The Companion's Emotion System
-
-The Companion plan has an emotion layer modeled on Damasio's somatic markers: a continuous background evaluator asking "Am I aligned with my goals?"
-
-The value system IS this, made concrete:
-- **Care** = the emotional weight assigned to a domain/task/person
-- **Confidence** = the felt sense of knowing (metamemory)
-- **Priority** = the prospective assessment ("will I need this?")
-
-These aren't separate from emotions — they are what emotions DO in a cognitive system. They modulate attention, effort, and behavior. The value system is the emotion system expressed as architectural parameters.
+| Subconscious Layer | Without Mirror | With Mirror |
+|-------------------|---------------|-------------|
+| **Encoding** (what becomes a node) | Encode everything / heuristic filter | Mirror's care + curiosity: encode deeply what values say matters |
+| **Traversal** (how deep to go) | Fixed depth or budget | Budget set by emotional state from Mirror |
+| **Pruning** (what to evict) | Distance from tips only | Distance × inverse priority (priority set by Mirror's assessment) |
+| **Consolidation** (what to strengthen) | Uniform processing | Mirror directs attention: high-care regions get more replay |
+| **Output** (what to say) | Generate if you have context | Mirror's confidence gates: speak, explore, or get curious |
+| **Epistemic humility** | Structural constraints only | Mirror knows what it doesn't know → curiosity, not silence |
 
 ## Open Questions
 
-- **Learning care:** Can the agent learn what to care about from experience, or must values be configured? Probably both — some values are given (like caring about the human), others emerge from the graph (you care about what you've invested in).
-- **Care conflicts:** What happens when the agent cares about two contradictory things? (The human wants X, but the agent's experience says X is harmful.)
-- **Confidence calibration:** How do you calibrate confidence so the agent isn't overconfident (speaks when it shouldn't) or underconfident (says "I don't know" when it has good information)?
+- **Learning values:** Can the agent learn what to value from experience, or must values be configured? Probably both — some values are given (utilitarian core), others emerge from the Mirror's experience (you value what you've invested in).
+- **Value conflicts:** What happens when the agent's values conflict? (The human wants X, but the agent's experience says X is harmful.) The Mirror needs a conflict resolution mechanism.
+- **Confidence calibration:** How do you calibrate so the Mirror isn't overconfident (speaks when it shouldn't) or underconfident (says "I don't know" when it has good information)?
 - **Priority horizon:** How far ahead does predicted_future_utility look? Next turn? Next conversation? Next month?
-- **Value drift:** Should the agent's values evolve over time, or should some be immutable? (Connection to alignment — values that drift could drift in bad directions.)
+- **Value drift:** Should values evolve over time, or should some be immutable? The utilitarian grounding should be stable, but specific care priorities may shift. (Connection to alignment — values that drift could drift in bad directions.)
+- **Mirror overhead:** The Mirror has its own matrix and trees — how much of the total compute/context budget does it consume? How do you prevent the metacognitive layer from starving the subconscious of resources?

@@ -1,9 +1,29 @@
 # Open Design Questions
 
+## Causal Edges (NEW — Round 5)
+
+Round 5 research resolved the *what* and *how* at the design level. These are the remaining open implementation questions:
+
+- **Minimum sample threshold:** What n is needed for GFCI to produce trustworthy PAG output? Literature is not prescriptive. Need empirical testing on synthetic tool-use data.
+
+- **Unknown intervention targets:** When multiple tool calls happen in close temporal proximity, which one caused the observed result? Need a method for causal discovery with unknown intervention targets (Wang et al. 2023 has partial answers).
+
+- **Bayesian vs. frequentist causal discovery:** Should the Mirror maintain a posterior distribution over causal graphs (Bayesian causal discovery), or use point-estimate algorithms (GFCI)? Bayesian approach is more principled but far more expensive.
+
+- **Causal edge interaction with pruning:** Should `CAUSES` edges have protected status against distance-based eviction? A causal edge between temporally distant nodes carries more structural importance than a weak PMI edge between nearby nodes.
+
+- **Counterfactual node representation:** When the agent infers "if I had done X differently, Y would have been better," where does that inference live? A dedicated counterfactual node? An edge annotation? Mirror meta-memory?
+
+- **LLM causal prior integration:** The LLM can vote on causal directions from variable names and semantics. How do we weight LLM-priors vs. statistical evidence? What prevents LLM hallucination from corrupting the causal graph?
+
+See `research/round5-causal-discovery.md` for the full pipeline design and library recommendations.
+
+---
+
 ## Association Model
 
 - **Beyond co-occurrence:** Co-occurrence is the simplest Hebbian mechanism. Should associations also form through:
-  - Causal chains? (A led to B → directed edge)
+  - Causal chains? (A led to B → directed edge) → **PARTIALLY RESOLVED by Round 5** — yes, via causal discovery during consolidation
   - Emotional resonance? (A and B both felt important)
   - Structural similarity? (A and B have similar graph neighborhoods)
   - LLM-judged conceptual links? (Ask the LLM "how are these related?" during consolidation)
@@ -21,17 +41,15 @@ The intake valve of the entire system. Currently unspecified.
 - **Who decides?** The LLM? A heuristic? Surprise-gating (Titans: only store what's unexpected)?
 - **Does encoding improve over time?** As the graph grows, more context for deciding what's new/important.
 
-## Anti-Hallucination Enforcement (Critical)
+## Epistemic Humility + Curiosity (Critical)
 
-The vision says the LLM ONLY answers from the graph. But LLMs always have pretrained knowledge. Prompt constraints aren't truly architectural.
+Reframed from "anti-hallucination enforcement." The goal isn't silence when the graph is sparse — it's curiosity. The agent has a meta-simulation of its own understanding (via the mirror layer and confidence system) and uses it to be honest AND generative about what it doesn't know.
 
-- **Possible approaches:**
-  - Minimal system prompt + only graph context (starve it of general knowledge)
-  - Verification layer: can the response be traced back to graph paths?
-  - Confidence gating: sparse graph coverage → "I don't know"
-  - Maybe a new kind of model needs to be trained — designed for graph-native reasoning rather than weight-based knowledge
-  - Maybe full enforcement isn't desirable — some pretrained reasoning IS appropriate (logic, math, language understanding)
-- **Key question:** Is this a spectrum rather than a binary? Where is pretrained knowledge appropriate vs. dangerous?
+- **The spectrum:** Pure graph-only answers for factual claims. Pretrained reasoning allowed for logic/math/language understanding. Monitored synthesis for combining graph facts into novel responses.
+- **Curiosity at cold start:** Empty graph = maximum curiosity, not maximum silence. "I haven't encountered this before — let's think about it." "What do you think?" Encode aggressively early, consolidation cleans up later.
+- **Structural mechanisms:** Confidence gating (comprehension × completeness), KG-Trie for structured paths (100% faithful), verification layers for synthesis, smaller models = less leakage.
+- **Honest ceiling:** ~85-95% for free-form synthesis even with all defenses. Frame as humility, not as a solved problem.
+- **Open:** Can a model be trained specifically for graph-native reasoning? Where exactly is pretrained knowledge appropriate vs. dangerous?
 
 ## Value System — Care, Confidence, Priority (→ design/value-system.md)
 

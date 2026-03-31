@@ -10,7 +10,7 @@ The memory structure IS the interpretable world model, and it replaces the role 
 
 - **Navigation, not retrieval** — agents traverse their experiential graph, not search a database
 - **LLM as engine, graph as mind** — the LLM reasons; the graph knows
-- **Anti-hallucination by design** — if the path doesn't exist, the answer is "I don't know"
+- **Epistemic humility + curiosity** — when the path doesn't exist, the agent is curious, not silent
 - **Interpretable** — you can read why the agent believes what it believes by tracing the graph
 - **Associations form through co-occurrence** — neurons that fire together wire together
 
@@ -20,13 +20,18 @@ The memory structure IS the interpretable world model, and it replaces the role 
 vision.md                    — Core thesis, philosophy, what makes this different
 research/audit.md            — Comprehensive research audit (50+ systems, March 2026)
 research/targeted-research-round2.md — Deep answers to 5 core design questions
-design/architecture.md       — Five-layer architecture overview
+design/architecture.md       — Three Planes (Matrix/Trees/Mirror) + mechanism layers
 design/data-model.md         — Node/edge/consciousness dataclasses + SQLite schema
 design/traversal.md          — Spreading activation algorithm + Hebbian strengthening
 design/pruning.md            — Distance-from-focus eviction, branch detachment, compression
 design/consolidation.md      — Episodic→semantic promotion, merging, connection discovery
 design/value-system.md       — Care, confidence, priority as unified motivational layer
 design/open-questions.md     — Unresolved design challenges (actively explored)
+design/world-integration.md  — Perception, action, and skill learning (THE next design challenge)
+design/improvements-from-round4.md — Research-driven corrections and additions
+research/round3-full-system-audit.md — 10-property novelty audit, 30+ systems (Three Planes era)
+research/round4-synthesis.md — 12-agent deep research: foundations, neuro, philosophy, AGI, feasibility
+research/round4-agents/      — Full agent reports (12 streams, 100+ sources)
 journal/                     — Evolution tracking (origins, timeline, deep entries)
 src/                         — Implementation (when ready)
 ```
@@ -48,6 +53,6 @@ Concept + research phase. Design docs drafted. No code yet.
 
 ## Related
 
-- ~/the-companion/ — The Companion project (may adopt this as its memory architecture)
+- ~/Playful Sincerity/PS Software/The Companion/ — The Companion project (may adopt this as its memory architecture)
 - ~/claude-system/journal/ — Broader meta-system journal (cross-reference major milestones there too)
 - Memory file: ~/.claude/projects/-Users-wisdomhappy/memory/project_associative_memory_architecture.md
