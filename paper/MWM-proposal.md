@@ -1,6 +1,6 @@
 # Memory as World Model
 
-### An interpretable-by-design memory architecture in which the graph replaces the role that pretrained weights currently play in forming beliefs
+### An interpretable-by-design architecture in which the graph replaces pretrained weights as the locus of belief
 
 **Wisdom Happy** · Playful Sincerity Research · April 2026
 

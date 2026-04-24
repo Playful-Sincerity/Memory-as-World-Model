@@ -7,3 +7,11 @@ node_modules/
 
 # Session briefs are local-only working files
 session-briefs/
+
+# LaTeX build artifacts (keep .tex/.pdf/.md, drop intermediates)
+paper/_body.md
+paper/_body.tex
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
