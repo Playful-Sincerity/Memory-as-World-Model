@@ -11,7 +11,7 @@ Build the MWM concept paper (the main artifact we'll be showing reviewers, colla
 **MWM — Memory as World Model** is an interpretable memory architecture where the memory structure IS the world model, replacing the role that pretrained weights currently play in forming beliefs.
 
 - **Local path:** `~/Playful Sincerity/PS Research/MWM/`
-- **Public repo:** [github.com/Playful-Sincerity/MWM](https://github.com/Playful-Sincerity/MWM) (public, as of 2026-04-24)
+- **Public repo:** [github.com/Playful-Sincerity/Memory-as-World-Model](https://github.com/Playful-Sincerity/Memory-as-World-Model) (public, as of 2026-04-24)
 - **Fellows status:** The 4-month Anthropic Fellows 2026 research target. Application due April 26, 2026.
 - **Sibling project:** [The Synthetic Sentiences Project](https://github.com/Playful-Sincerity/Synthetic-Sentiences-Project) — MWM is its memory subsystem; SSP is the broader research program.
 
