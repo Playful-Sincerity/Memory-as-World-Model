@@ -10,7 +10,7 @@
 
 LLMs are inefficient for cognition. They store knowledge in weights, which means you pay for knowledge recall every inference call. But if knowledge lives in a **structured memory graph**, the LLM doesn't need to know anything — it just needs to read and write.
 
-The Associative Memory architecture (graph IS the world model) + a small local LLM (traversal engine) + tool calls (math, logic, search) might produce a functional cognitive agent that:
+The MWM architecture (graph IS the world model) + a small local LLM (traversal engine) + tool calls (math, logic, search) might produce a functional cognitive agent that:
 
 - Runs 24/7 on a MacBook Pro M5 (32GB)
 - Costs $0 in API tokens
@@ -213,7 +213,7 @@ Does Wisdom interact with it and feel like it understands?
 This research is shared between two projects:
 
 ```
-Associative Memory (PS Research)
+MWM (PS Research)
   research/local-cognition/
     README.md                    — scope and orientation (memory architecture focus)
     feasibility-plan.md          — THIS FILE (symlinked from Companion)
@@ -230,7 +230,7 @@ The Companion (PS Software)
     stream-5-consciousness/      — permission/emotion on local models
 ```
 
-Memory-architecture research (streams 1, 3, 6) lives in Associative Memory.
+Memory-architecture research (streams 1, 3, 6) lives in MWM.
 Agent-consciousness research (streams 2, 4, 5) lives in The Companion.
 Both reference the same feasibility plan.
 

@@ -1,4 +1,4 @@
-# Compute Architecture for Associative Memory
+# Compute Architecture for Memory as World Model
 
 Voice notes captured 2026-04-03. These are early-stage ideas about designing hardware and software architectures optimized specifically for the AM graph architecture.
 

@@ -1,4 +1,4 @@
-# Associative Memory Architecture — Vision
+# Memory as World Model — Vision
 
 ## The Core Thesis
 

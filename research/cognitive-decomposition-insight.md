@@ -8,7 +8,7 @@
 
 An LLM performs many cognitive functions through one mechanism — next-token prediction via weights. Memory, association, reasoning, language, creativity — all compressed into the same probabilistic substrate. This is why it hallucinates: it uses the same mechanism for "what's the capital of France" (should be deterministic) as for "write me a poem" (should be creative). It cannot distinguish between recalling a fact and generating a plausible-sounding one.
 
-Associative Memory doesn't make the LLM more deterministic. It **pulls out the functions that should never have been probabilistic in the first place** and gives them a proper deterministic home.
+MWM doesn't make the LLM more deterministic. It **pulls out the functions that should never have been probabilistic in the first place** and gives them a proper deterministic home.
 
 ## The Decomposition
 

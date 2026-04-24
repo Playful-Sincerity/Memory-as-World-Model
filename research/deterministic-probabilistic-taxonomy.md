@@ -130,7 +130,7 @@ These are the critical integration points — tasks that need BOTH.
 | Code understanding | AST + call graph | Semantic explanation | tree-sitter + LLM |
 | Research | Paper search results | Synthesis and analysis | Semantic Scholar + LLM |
 | Math reasoning | Wolfram computation | Explanation in context | Wolfram + LLM |
-| Associative Memory | Spreading activation paths | Intent interpretation | AM architecture |
+| MWM | Spreading activation paths | Intent interpretation | MWM architecture |
 
 ### Pattern 3: LLM Designs, Tool Executes Forever (Design-Once-Run-Many)
 ```
@@ -170,7 +170,7 @@ Constrained decoding (Outlines, llguidance) embeds deterministic grammar enforce
 **Level 3: Hybrid architecture (research frontier)**
 The graph/logic engine is not a tool the LLM calls — it IS part of the reasoning architecture. The LLM provides the semantic substrate; the deterministic engine provides the logical substrate. They share representations.
 
-This is where Associative Memory lives: the graph is not a database the LLM queries. The graph IS the world model. The LLM interprets intent and synthesizes output, but the reasoning — spreading activation, path finding, logical inference — happens in the graph engine deterministically. The LLM never hallucinates a connection that doesn't exist in the graph, because the graph is the authority on what connections exist.
+This is where MWM lives: the graph is not a database the LLM queries. The graph IS the world model. The LLM interprets intent and synthesizes output, but the reasoning — spreading activation, path finding, logical inference — happens in the graph engine deterministically. The LLM never hallucinates a connection that doesn't exist in the graph, because the graph is the authority on what connections exist.
 
 ### The Wolfram Extrapolation
 

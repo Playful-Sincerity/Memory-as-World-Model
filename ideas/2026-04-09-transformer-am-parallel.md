@@ -1,7 +1,7 @@
 ---
 timestamp: "2026-04-09"
 category: idea
-related_project: Associative Memory
+related_project: MWM
 ---
 
 # Transformer Architecture as AM Validation

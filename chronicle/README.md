@@ -1,6 +1,6 @@
 # Chronicle
 
-Semantic evolution log for Associative Memory. Daily append-only files tracking decisions, discoveries, and development reasoning.
+Semantic evolution log for Memory as World Model (MWM). Daily append-only files tracking decisions, discoveries, and development reasoning.
 
 ## Format
 

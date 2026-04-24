@@ -1,7 +1,7 @@
 ---
 timestamp: "2026-04-11"
 category: idea
-related_project: Associative Memory
+related_project: MWM
 ---
 
 # Architecture Deep Notes — Compute, Models, Compression, Bias

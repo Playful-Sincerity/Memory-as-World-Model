@@ -1,4 +1,4 @@
-# Overlap Analysis: Craig Quiter / MemTree × Associative Memory
+# Overlap Analysis: Craig Quiter / MemTree × MWM
 
 *2026-04-21*
 
@@ -25,7 +25,7 @@ Commercialized implementation with additional engineering:
 
 ## The Core Architectural Comparison
 
-| Dimension | MemTree | Associative Memory |
+| Dimension | MemTree | MWM |
 |-----------|---------|-------------------|
 | **Framing** | Memory as compression/retrieval | Memory as meaning/world model |
 | **Structure** | B-tree (hierarchical, ordered) | Graph (navigational, associative) |
