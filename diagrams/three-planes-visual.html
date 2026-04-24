@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Associative Memory — Three Planes</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a12;
+    color: #e0e0e0;
+    font-family: 'SF Pro Display', -apple-system, 'Helvetica Neue', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .header {
+    text-align: center;
+    padding: 48px 20px 12px;
+  }
+  .header h1 {
+    font-size: 42px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  .header p {
+    font-size: 18px;
+    color: #8899aa;
+    margin-top: 8px;
+    font-weight: 300;
+  }
+
+  .panels {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    padding: 32px 40px;
+    flex-wrap: wrap;
+  }
+
+  .panel {
+    background: #0d0d18;
+    border-radius: 16px;
+    padding: 20px;
+    width: 320px;
+    border: 1px solid #1a1a2e;
+    position: relative;
+  }
+  .panel h2 {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .panel p {
+    font-size: 13px;
+    color: #667788;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .panel-matrix { border-color: #2a4a7a; }
+  .panel-matrix h2 { color: #4a90d9; }
+  .panel-trees { border-color: #2a6a3a; }
+  .panel-trees h2 { color: #6bcb77; }
+  .panel-mirror { border-color: #6a2a6a; }
+  .panel-mirror h2 { color: #d4a0d4; }
+
+  .big-panel {
+    max-width: 1040px;
+    margin: 0 auto 40px;
+    background: #0d0d18;
+    border-radius: 20px;
+    padding: 28px;
+    border: 1px solid #1a1a2e;
+    position: relative;
+  }
+  .big-panel h2 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    color: #aabbcc;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  svg text { font-family: 'SF Pro Display', -apple-system, 'Helvetica Neue', sans-serif; }
+
+  /* Glow effects */
+  .glow-blue { filter: drop-shadow(0 0 6px rgba(74, 144, 217, 0.4)); }
+  .glow-green { filter: drop-shadow(0 0 6px rgba(107, 203, 119, 0.4)); }
+  .glow-purple { filter: drop-shadow(0 0 6px rgba(212, 160, 212, 0.4)); }
+
+  /* Animations */
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+  @keyframes treegrow {
+    0% { stroke-dashoffset: 200; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-in {
+    animation: fadein 0.8s ease-out forwards;
+  }
+  .pulse-slow {
+    animation: pulse 4s ease-in-out infinite;
+  }
+  .pulse-med {
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  .tree-line {
+    stroke-dasharray: 200;
+    animation: treegrow 3s ease-out forwards;
+  }
+
+  .insight-bar {
+    max-width: 1040px;
+    margin: 0 auto 48px;
+    display: flex;
+    gap: 20px;
+    padding: 0 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .insight {
+    background: #111119;
+    border-radius: 12px;
+    padding: 16px 20px;
+    flex: 1;
+    min-width: 220px;
+    max-width: 260px;
+    border-left: 3px solid #ff9f43;
+  }
+  .insight strong {
+    color: #ffcc80;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .insight span {
+    color: #778899;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 20px;
+    color: #334455;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header animate-in">
+  <h1>Associative Memory</h1>
+  <p>The graph is the mind. Navigate, don't search.</p>
+</div>
+
+<!-- Three small panels showing each plane -->
+<div class="panels">
+
+  <!-- MATRIX panel -->
+  <div class="panel panel-matrix animate-in" style="animation-delay: 0.2s">
+    <h2>The Matrix</h2>
+    <p>All memories. One graph. Mostly dark — activated on demand.</p>
+    <svg width="280" height="200" viewBox="0 0 280 200">
+      <!-- Background nodes (dim, the vast dark matrix) -->
+      <circle cx="30" cy="40" r="4" fill="#1a2a44" opacity="0.4"/>
+      <circle cx="80" cy="25" r="3" fill="#1a2a44" opacity="0.3"/>
+      <circle cx="140" cy="50" r="4" fill="#1a2a44" opacity="0.35"/>
+      <circle cx="200" cy="30" r="3" fill="#1a2a44" opacity="0.3"/>
+      <circle cx="250" cy="55" r="4" fill="#1a2a44" opacity="0.4"/>
+      <circle cx="55" cy="90" r="3" fill="#1a2a44" opacity="0.35"/>
+      <circle cx="110" cy="100" r="4" fill="#1a2a44" opacity="0.3"/>
+      <circle cx="170" cy="85" r="3" fill="#1a2a44" opacity="0.4"/>
+      <circle cx="230" cy="100" r="4" fill="#1a2a44" opacity="0.3"/>
+      <circle cx="40" cy="150" r="3" fill="#1a2a44" opacity="0.35"/>
+      <circle cx="100" cy="160" r="4" fill="#1a2a44" opacity="0.3"/>
+      <circle cx="160" cy="140" r="3" fill="#1a2a44" opacity="0.4"/>
+      <circle cx="220" cy="155" r="4" fill="#1a2a44" opacity="0.35"/>
+      <circle cx="260" cy="140" r="3" fill="#1a2a44" opacity="0.3"/>
+      <circle cx="20" cy="180" r="3" fill="#1a2a44" opacity="0.3"/>
+      <circle cx="130" cy="180" r="4" fill="#1a2a44" opacity="0.35"/>
+      <circle cx="190" cy="175" r="3" fill="#1a2a44" opacity="0.3"/>
+      <circle cx="70" cy="130" r="3" fill="#1a2a44" opacity="0.35"/>
+
+      <!-- Dim edges between some nodes -->
+      <line x1="30" y1="40" x2="80" y2="25" stroke="#1a2a44" stroke-width="0.5" opacity="0.3"/>
+      <line x1="80" y1="25" x2="140" y2="50" stroke="#1a2a44" stroke-width="0.5" opacity="0.25"/>
+      <line x1="140" y1="50" x2="200" y2="30" stroke="#1a2a44" stroke-width="0.5" opacity="0.3"/>
+      <line x1="200" y1="30" x2="250" y2="55" stroke="#1a2a44" stroke-width="0.5" opacity="0.25"/>
+      <line x1="55" y1="90" x2="110" y2="100" stroke="#1a2a44" stroke-width="0.5" opacity="0.3"/>
+      <line x1="110" y1="100" x2="170" y2="85" stroke="#1a2a44" stroke-width="0.5" opacity="0.25"/>
+      <line x1="170" y1="85" x2="230" y2="100" stroke="#1a2a44" stroke-width="0.5" opacity="0.3"/>
+      <line x1="40" y1="150" x2="100" y2="160" stroke="#1a2a44" stroke-width="0.5" opacity="0.25"/>
+      <line x1="100" y1="160" x2="160" y2="140" stroke="#1a2a44" stroke-width="0.5" opacity="0.3"/>
+      <line x1="160" y1="140" x2="220" y2="155" stroke="#1a2a44" stroke-width="0.5" opacity="0.25"/>
+      <line x1="30" y1="40" x2="55" y2="90" stroke="#1a2a44" stroke-width="0.5" opacity="0.2"/>
+      <line x1="140" y1="50" x2="110" y2="100" stroke="#1a2a44" stroke-width="0.5" opacity="0.2"/>
+      <line x1="250" y1="55" x2="230" y2="100" stroke="#1a2a44" stroke-width="0.5" opacity="0.2"/>
+      <line x1="55" y1="90" x2="40" y2="150" stroke="#1a2a44" stroke-width="0.5" opacity="0.2"/>
+      <line x1="170" y1="85" x2="160" y2="140" stroke="#1a2a44" stroke-width="0.5" opacity="0.2"/>
+      <line x1="70" y1="130" x2="100" y2="160" stroke="#1a2a44" stroke-width="0.5" opacity="0.2"/>
+      <line x1="110" y1="100" x2="70" y2="130" stroke="#1a2a44" stroke-width="0.5" opacity="0.2"/>
+      <line x1="220" y1="155" x2="260" y2="140" stroke="#1a2a44" stroke-width="0.5" opacity="0.2"/>
+
+      <!-- A few pulsing nodes (idle background activity) -->
+      <circle cx="140" cy="50" r="4" fill="#2a4a7a" class="pulse-slow" opacity="0.5"/>
+      <circle cx="230" cy="100" r="4" fill="#2a4a7a" class="pulse-slow" style="animation-delay: 1.5s" opacity="0.5"/>
+      <circle cx="100" cy="160" r="4" fill="#2a4a7a" class="pulse-slow" style="animation-delay: 3s" opacity="0.5"/>
+
+      <text x="140" y="195" text-anchor="middle" fill="#334466" font-size="11">vast, mostly dark, all of memory</text>
+    </svg>
+  </div>
+
+  <!-- TREES panel -->
+  <div class="panel panel-trees animate-in" style="animation-delay: 0.4s">
+    <h2>Trees</h2>
+    <p>A thought = a growing subgraph. Multiple can run in parallel.</p>
+    <svg width="280" height="200" viewBox="0 0 280 200">
+      <!-- Same dim background matrix -->
+      <circle cx="30" cy="40" r="3" fill="#1a2a44" opacity="0.2"/>
+      <circle cx="80" cy="25" r="3" fill="#1a2a44" opacity="0.15"/>
+      <circle cx="140" cy="50" r="3" fill="#1a2a44" opacity="0.2"/>
+      <circle cx="200" cy="30" r="3" fill="#1a2a44" opacity="0.15"/>
+      <circle cx="250" cy="55" r="3" fill="#1a2a44" opacity="0.2"/>
+      <circle cx="55" cy="90" r="3" fill="#1a2a44" opacity="0.15"/>
+      <circle cx="110" cy="100" r="3" fill="#1a2a44" opacity="0.2"/>
+      <circle cx="170" cy="85" r="3" fill="#1a2a44" opacity="0.15"/>
+      <circle cx="230" cy="100" r="3" fill="#1a2a44" opacity="0.2"/>
+      <circle cx="40" cy="150" r="3" fill="#1a2a44" opacity="0.15"/>
+      <circle cx="100" cy="160" r="3" fill="#1a2a44" opacity="0.2"/>
+      <circle cx="160" cy="140" r="3" fill="#1a2a44" opacity="0.15"/>
+      <circle cx="220" cy="155" r="3" fill="#1a2a44" opacity="0.2"/>
+      <circle cx="70" cy="130" r="3" fill="#1a2a44" opacity="0.15"/>
+
+      <!-- Dim background edges -->
+      <line x1="30" y1="40" x2="80" y2="25" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="80" y1="25" x2="140" y2="50" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="140" y1="50" x2="200" y2="30" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="55" y1="90" x2="110" y2="100" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="110" y1="100" x2="170" y2="85" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="170" y1="85" x2="230" y2="100" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="40" y1="150" x2="100" y2="160" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="100" y1="160" x2="160" y2="140" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="30" y1="40" x2="55" y2="90" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="140" y1="50" x2="110" y2="100" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="110" y1="100" x2="70" y2="130" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+      <line x1="70" y1="130" x2="100" y2="160" stroke="#1a2a44" stroke-width="0.5" opacity="0.15"/>
+
+      <!-- TREE 1: Green — growing from node 80,25 outward -->
+      <line x1="80" y1="25" x2="140" y2="50" stroke="#6bcb77" stroke-width="2" opacity="0.8" class="tree-line"/>
+      <line x1="140" y1="50" x2="110" y2="100" stroke="#6bcb77" stroke-width="1.8" opacity="0.7" class="tree-line" style="animation-delay: 0.5s"/>
+      <line x1="110" y1="100" x2="70" y2="130" stroke="#6bcb77" stroke-width="1.5" opacity="0.6" class="tree-line" style="animation-delay: 1s"/>
+      <line x1="110" y1="100" x2="170" y2="85" stroke="#6bcb77" stroke-width="1.5" opacity="0.5" class="tree-line" style="animation-delay: 1.2s"/>
+      <circle cx="80" cy="25" r="5" fill="#6bcb77" opacity="0.9" class="glow-green"/>
+      <circle cx="140" cy="50" r="5" fill="#6bcb77" opacity="0.7"/>
+      <circle cx="110" cy="100" r="4.5" fill="#6bcb77" opacity="0.6"/>
+      <circle cx="70" cy="130" r="4" fill="#6bcb77" opacity="0.4"/>
+      <circle cx="170" cy="85" r="4" fill="#6bcb77" opacity="0.35"/>
+
+      <!-- TREE 2: Teal — separate parallel thought -->
+      <line x1="220" y1="155" x2="160" y2="140" stroke="#4ac9b0" stroke-width="1.8" opacity="0.7" class="tree-line" style="animation-delay: 1.5s"/>
+      <line x1="160" y1="140" x2="100" y2="160" stroke="#4ac9b0" stroke-width="1.5" opacity="0.5" class="tree-line" style="animation-delay: 2s"/>
+      <circle cx="220" cy="155" r="5" fill="#4ac9b0" opacity="0.8" class="glow-green"/>
+      <circle cx="160" cy="140" r="4.5" fill="#4ac9b0" opacity="0.6"/>
+      <circle cx="100" cy="160" r="4" fill="#4ac9b0" opacity="0.4"/>
+
+      <!-- Labels -->
+      <text x="68" y="15" fill="#6bcb77" font-size="10" opacity="0.8">thought 1</text>
+      <text x="222" y="180" fill="#4ac9b0" font-size="10" opacity="0.8">thought 2</text>
+      <text x="140" y="195" text-anchor="middle" fill="#2a5a3a" font-size="11">parallel trees growing through the matrix</text>
+    </svg>
+  </div>
+
+  <!-- MIRROR panel -->
+  <div class="panel panel-mirror animate-in" style="animation-delay: 0.6s">
+    <h2>The Mirror</h2>
+    <p>The persistent self. Values as gravity wells. Produces emotions.</p>
+    <svg width="280" height="200" viewBox="0 0 280 200">
+      <!-- Central cluster — the Mirror self-model, always on -->
+      <!-- Outer glow -->
+      <circle cx="140" cy="95" r="60" fill="url(#mirrorGlow)" opacity="0.15"/>
+
+      <defs>
+        <radialGradient id="mirrorGlow">
+          <stop offset="0%" stop-color="#d4a0d4" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#d4a0d4" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="valueGlow">
+          <stop offset="0%" stop-color="#ffaa55" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#ffaa55" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Mirror edges (the self-model connections) -->
+      <line x1="140" y1="60" x2="105" y2="90" stroke="#d4a0d4" stroke-width="1.5" opacity="0.6"/>
+      <line x1="140" y1="60" x2="175" y2="85" stroke="#d4a0d4" stroke-width="1.5" opacity="0.6"/>
+      <line x1="105" y1="90" x2="120" y2="130" stroke="#d4a0d4" stroke-width="1.2" opacity="0.5"/>
+      <line x1="175" y1="85" x2="160" y2="125" stroke="#d4a0d4" stroke-width="1.2" opacity="0.5"/>
+      <line x1="105" y1="90" x2="75" y2="115" stroke="#d4a0d4" stroke-width="1" opacity="0.4"/>
+      <line x1="175" y1="85" x2="205" y2="110" stroke="#d4a0d4" stroke-width="1" opacity="0.4"/>
+      <line x1="120" y1="130" x2="160" y2="125" stroke="#d4a0d4" stroke-width="1" opacity="0.4"/>
+      <line x1="140" y1="60" x2="140" y2="30" stroke="#d4a0d4" stroke-width="1" opacity="0.3"/>
+
+      <!-- Value gravity wells (orange — they pull trees toward them) -->
+      <circle cx="75" cy="115" r="18" fill="url(#valueGlow)" opacity="0.5" class="pulse-med"/>
+      <circle cx="205" cy="110" r="18" fill="url(#valueGlow)" opacity="0.5" class="pulse-med" style="animation-delay: 1s"/>
+
+      <!-- Mirror nodes -->
+      <circle cx="140" cy="60" r="6" fill="#d4a0d4" opacity="0.9" class="glow-purple"/>
+      <circle cx="105" cy="90" r="5" fill="#d4a0d4" opacity="0.7"/>
+      <circle cx="175" cy="85" r="5" fill="#d4a0d4" opacity="0.7"/>
+      <circle cx="120" cy="130" r="4.5" fill="#d4a0d4" opacity="0.6"/>
+      <circle cx="160" cy="125" r="4.5" fill="#d4a0d4" opacity="0.6"/>
+      <circle cx="140" cy="30" r="3.5" fill="#d4a0d4" opacity="0.4"/>
+
+      <!-- Value nodes (bright, gravitational) -->
+      <circle cx="75" cy="115" r="5" fill="#ffaa55" opacity="0.9"/>
+      <circle cx="205" cy="110" r="5" fill="#ffaa55" opacity="0.9"/>
+
+      <!-- Labels -->
+      <text x="140" y="18" text-anchor="middle" fill="#d4a0d4" font-size="9" opacity="0.6">identity</text>
+      <text x="55" y="140" fill="#ffaa55" font-size="9" opacity="0.8">care</text>
+      <text x="198" y="135" fill="#ffaa55" font-size="9" opacity="0.8">curiosity</text>
+      <text x="140" y="160" text-anchor="middle" fill="#8855aa" font-size="10" opacity="0.7">always on — never dies</text>
+      <text x="140" y="195" text-anchor="middle" fill="#553366" font-size="11">the continuous "I"</text>
+    </svg>
+  </div>
+</div>
+
+<!-- Big combined panel: Trees growing through the Matrix, Mirror influencing -->
+<div class="big-panel animate-in" style="animation-delay: 0.8s">
+  <h2>All Three Planes Together</h2>
+  <svg width="100%" height="480" viewBox="0 0 980 480">
+
+    <!-- ═══ THE MATRIX: vast background graph ═══ -->
+    <!-- Generate a dense field of dim nodes -->
+    <g id="matrix-nodes" opacity="0.35">
+      <!-- Row 1 -->
+      <circle cx="40" cy="30" r="3" fill="#1a2a44"/><circle cx="95" cy="22" r="2.5" fill="#1a2a44"/>
+      <circle cx="150" cy="40" r="3" fill="#1a2a44"/><circle cx="210" cy="28" r="2.5" fill="#1a2a44"/>
+      <circle cx="270" cy="45" r="3" fill="#1a2a44"/><circle cx="330" cy="20" r="2.5" fill="#1a2a44"/>
+      <circle cx="390" cy="38" r="3" fill="#1a2a44"/><circle cx="450" cy="25" r="2.5" fill="#1a2a44"/>
+      <circle cx="510" cy="42" r="3" fill="#1a2a44"/><circle cx="570" cy="30" r="2.5" fill="#1a2a44"/>
+      <circle cx="630" cy="48" r="3" fill="#1a2a44"/><circle cx="690" cy="22" r="2.5" fill="#1a2a44"/>
+      <circle cx="750" cy="35" r="3" fill="#1a2a44"/><circle cx="810" cy="28" r="2.5" fill="#1a2a44"/>
+      <circle cx="870" cy="40" r="3" fill="#1a2a44"/><circle cx="930" cy="32" r="2.5" fill="#1a2a44"/>
+      <!-- Row 2 -->
+      <circle cx="60" cy="80" r="3" fill="#1a2a44"/><circle cx="120" cy="75" r="2.5" fill="#1a2a44"/>
+      <circle cx="180" cy="90" r="3" fill="#1a2a44"/><circle cx="240" cy="78" r="2.5" fill="#1a2a44"/>
+      <circle cx="300" cy="85" r="3" fill="#1a2a44"/><circle cx="360" cy="72" r="2.5" fill="#1a2a44"/>
+      <circle cx="420" cy="88" r="3" fill="#1a2a44"/><circle cx="480" cy="76" r="2.5" fill="#1a2a44"/>
+      <circle cx="540" cy="92" r="3" fill="#1a2a44"/><circle cx="600" cy="80" r="2.5" fill="#1a2a44"/>
+      <circle cx="660" cy="86" r="3" fill="#1a2a44"/><circle cx="720" cy="74" r="2.5" fill="#1a2a44"/>
+      <circle cx="780" cy="90" r="3" fill="#1a2a44"/><circle cx="840" cy="78" r="2.5" fill="#1a2a44"/>
+      <circle cx="900" cy="85" r="3" fill="#1a2a44"/><circle cx="950" cy="75" r="2.5" fill="#1a2a44"/>
+      <!-- Row 3 -->
+      <circle cx="45" cy="130" r="3" fill="#1a2a44"/><circle cx="105" cy="125" r="2.5" fill="#1a2a44"/>
+      <circle cx="165" cy="140" r="3" fill="#1a2a44"/><circle cx="225" cy="128" r="2.5" fill="#1a2a44"/>
+      <circle cx="285" cy="135" r="3" fill="#1a2a44"/><circle cx="345" cy="122" r="2.5" fill="#1a2a44"/>
+      <circle cx="405" cy="138" r="3" fill="#1a2a44"/><circle cx="465" cy="126" r="2.5" fill="#1a2a44"/>
+      <circle cx="525" cy="142" r="3" fill="#1a2a44"/><circle cx="585" cy="130" r="2.5" fill="#1a2a44"/>
+      <circle cx="645" cy="136" r="3" fill="#1a2a44"/><circle cx="705" cy="124" r="2.5" fill="#1a2a44"/>
+      <circle cx="765" cy="140" r="3" fill="#1a2a44"/><circle cx="825" cy="128" r="2.5" fill="#1a2a44"/>
+      <circle cx="885" cy="135" r="3" fill="#1a2a44"/><circle cx="940" cy="130" r="2.5" fill="#1a2a44"/>
+      <!-- Row 4 -->
+      <circle cx="55" cy="185" r="3" fill="#1a2a44"/><circle cx="115" cy="178" r="2.5" fill="#1a2a44"/>
+      <circle cx="175" cy="192" r="3" fill="#1a2a44"/><circle cx="235" cy="180" r="2.5" fill="#1a2a44"/>
+      <circle cx="295" cy="188" r="3" fill="#1a2a44"/><circle cx="355" cy="175" r="2.5" fill="#1a2a44"/>
+      <circle cx="415" cy="190" r="3" fill="#1a2a44"/><circle cx="475" cy="178" r="2.5" fill="#1a2a44"/>
+      <circle cx="535" cy="195" r="3" fill="#1a2a44"/><circle cx="595" cy="182" r="2.5" fill="#1a2a44"/>
+      <circle cx="655" cy="188" r="3" fill="#1a2a44"/><circle cx="715" cy="176" r="2.5" fill="#1a2a44"/>
+      <circle cx="775" cy="192" r="3" fill="#1a2a44"/><circle cx="835" cy="180" r="2.5" fill="#1a2a44"/>
+      <circle cx="895" cy="188" r="3" fill="#1a2a44"/><circle cx="945" cy="182" r="2.5" fill="#1a2a44"/>
+      <!-- Row 5 -->
+      <circle cx="40" cy="240" r="3" fill="#1a2a44"/><circle cx="100" cy="232" r="2.5" fill="#1a2a44"/>
+      <circle cx="160" cy="245" r="3" fill="#1a2a44"/><circle cx="220" cy="235" r="2.5" fill="#1a2a44"/>
+      <circle cx="280" cy="248" r="3" fill="#1a2a44"/><circle cx="340" cy="230" r="2.5" fill="#1a2a44"/>
+      <circle cx="400" cy="242" r="3" fill="#1a2a44"/><circle cx="460" cy="236" r="2.5" fill="#1a2a44"/>
+      <circle cx="520" cy="250" r="3" fill="#1a2a44"/><circle cx="580" cy="238" r="2.5" fill="#1a2a44"/>
+      <circle cx="640" cy="244" r="3" fill="#1a2a44"/><circle cx="700" cy="232" r="2.5" fill="#1a2a44"/>
+      <circle cx="760" cy="248" r="3" fill="#1a2a44"/><circle cx="820" cy="236" r="2.5" fill="#1a2a44"/>
+      <circle cx="880" cy="242" r="3" fill="#1a2a44"/><circle cx="940" cy="238" r="2.5" fill="#1a2a44"/>
+      <!-- Row 6 -->
+      <circle cx="50" cy="295" r="3" fill="#1a2a44"/><circle cx="110" cy="288" r="2.5" fill="#1a2a44"/>
+      <circle cx="170" cy="300" r="3" fill="#1a2a44"/><circle cx="230" cy="290" r="2.5" fill="#1a2a44"/>
+      <circle cx="290" cy="298" r="3" fill="#1a2a44"/><circle cx="350" cy="285" r="2.5" fill="#1a2a44"/>
+      <circle cx="410" cy="295" r="3" fill="#1a2a44"/><circle cx="470" cy="288" r="2.5" fill="#1a2a44"/>
+      <circle cx="530" cy="302" r="3" fill="#1a2a44"/><circle cx="590" cy="290" r="2.5" fill="#1a2a44"/>
+      <circle cx="650" cy="296" r="3" fill="#1a2a44"/><circle cx="710" cy="284" r="2.5" fill="#1a2a44"/>
+      <circle cx="770" cy="300" r="3" fill="#1a2a44"/><circle cx="830" cy="288" r="2.5" fill="#1a2a44"/>
+      <circle cx="890" cy="295" r="3" fill="#1a2a44"/><circle cx="945" cy="290" r="2.5" fill="#1a2a44"/>
+      <!-- Row 7 -->
+      <circle cx="65" cy="350" r="3" fill="#1a2a44"/><circle cx="125" cy="342" r="2.5" fill="#1a2a44"/>
+      <circle cx="185" cy="355" r="3" fill="#1a2a44"/><circle cx="245" cy="345" r="2.5" fill="#1a2a44"/>
+      <circle cx="305" cy="352" r="3" fill="#1a2a44"/><circle cx="365" cy="340" r="2.5" fill="#1a2a44"/>
+      <circle cx="425" cy="348" r="3" fill="#1a2a44"/><circle cx="485" cy="342" r="2.5" fill="#1a2a44"/>
+      <circle cx="545" cy="358" r="3" fill="#1a2a44"/><circle cx="605" cy="345" r="2.5" fill="#1a2a44"/>
+      <circle cx="665" cy="350" r="3" fill="#1a2a44"/><circle cx="725" cy="340" r="2.5" fill="#1a2a44"/>
+      <circle cx="785" cy="355" r="3" fill="#1a2a44"/><circle cx="845" cy="342" r="2.5" fill="#1a2a44"/>
+      <circle cx="905" cy="350" r="3" fill="#1a2a44"/><circle cx="950" cy="345" r="2.5" fill="#1a2a44"/>
+      <!-- Row 8 -->
+      <circle cx="45" cy="400" r="3" fill="#1a2a44"/><circle cx="105" cy="395" r="2.5" fill="#1a2a44"/>
+      <circle cx="165" cy="408" r="3" fill="#1a2a44"/><circle cx="225" cy="398" r="2.5" fill="#1a2a44"/>
+      <circle cx="285" cy="405" r="3" fill="#1a2a44"/><circle cx="345" cy="392" r="2.5" fill="#1a2a44"/>
+      <circle cx="405" cy="400" r="3" fill="#1a2a44"/><circle cx="465" cy="395" r="2.5" fill="#1a2a44"/>
+      <circle cx="525" cy="410" r="3" fill="#1a2a44"/><circle cx="585" cy="398" r="2.5" fill="#1a2a44"/>
+      <circle cx="645" cy="404" r="3" fill="#1a2a44"/><circle cx="705" cy="392" r="2.5" fill="#1a2a44"/>
+      <circle cx="765" cy="408" r="3" fill="#1a2a44"/><circle cx="825" cy="396" r="2.5" fill="#1a2a44"/>
+      <circle cx="885" cy="402" r="3" fill="#1a2a44"/><circle cx="940" cy="398" r="2.5" fill="#1a2a44"/>
+      <!-- Row 9 -->
+      <circle cx="55" cy="450" r="3" fill="#1a2a44"/><circle cx="115" cy="445" r="2.5" fill="#1a2a44"/>
+      <circle cx="175" cy="455" r="3" fill="#1a2a44"/><circle cx="235" cy="448" r="2.5" fill="#1a2a44"/>
+      <circle cx="295" cy="452" r="3" fill="#1a2a44"/><circle cx="355" cy="440" r="2.5" fill="#1a2a44"/>
+      <circle cx="415" cy="450" r="3" fill="#1a2a44"/><circle cx="475" cy="445" r="2.5" fill="#1a2a44"/>
+      <circle cx="535" cy="458" r="3" fill="#1a2a44"/><circle cx="595" cy="448" r="2.5" fill="#1a2a44"/>
+      <circle cx="655" cy="452" r="3" fill="#1a2a44"/><circle cx="715" cy="442" r="2.5" fill="#1a2a44"/>
+      <circle cx="775" cy="456" r="3" fill="#1a2a44"/><circle cx="835" cy="444" r="2.5" fill="#1a2a44"/>
+      <circle cx="895" cy="450" r="3" fill="#1a2a44"/><circle cx="945" cy="448" r="2.5" fill="#1a2a44"/>
+    </g>
+
+    <!-- ═══ MATRIX EDGES (sparse web) ═══ -->
+    <g id="matrix-edges" opacity="0.12" stroke="#1a2a44" stroke-width="0.5">
+      <!-- Horizontal-ish connections -->
+      <line x1="40" y1="30" x2="95" y2="22"/><line x1="95" y1="22" x2="150" y2="40"/>
+      <line x1="150" y1="40" x2="210" y2="28"/><line x1="210" y1="28" x2="270" y2="45"/>
+      <line x1="330" y1="20" x2="390" y2="38"/><line x1="450" y1="25" x2="510" y2="42"/>
+      <line x1="570" y1="30" x2="630" y2="48"/><line x1="690" y1="22" x2="750" y2="35"/>
+      <line x1="810" y1="28" x2="870" y2="40"/><line x1="60" y1="80" x2="120" y2="75"/>
+      <line x1="180" y1="90" x2="240" y2="78"/><line x1="300" y1="85" x2="360" y2="72"/>
+      <line x1="420" y1="88" x2="480" y2="76"/><line x1="540" y1="92" x2="600" y2="80"/>
+      <line x1="660" y1="86" x2="720" y2="74"/><line x1="780" y1="90" x2="840" y2="78"/>
+      <line x1="45" y1="130" x2="105" y2="125"/><line x1="165" y1="140" x2="225" y2="128"/>
+      <line x1="285" y1="135" x2="345" y2="122"/><line x1="405" y1="138" x2="465" y2="126"/>
+      <line x1="525" y1="142" x2="585" y2="130"/><line x1="645" y1="136" x2="705" y2="124"/>
+      <line x1="765" y1="140" x2="825" y2="128"/>
+      <line x1="55" y1="185" x2="115" y2="178"/><line x1="175" y1="192" x2="235" y2="180"/>
+      <line x1="295" y1="188" x2="355" y2="175"/><line x1="415" y1="190" x2="475" y2="178"/>
+      <line x1="535" y1="195" x2="595" y2="182"/><line x1="655" y1="188" x2="715" y2="176"/>
+      <line x1="775" y1="192" x2="835" y2="180"/>
+      <line x1="100" y1="232" x2="160" y2="245"/><line x1="280" y1="248" x2="340" y2="230"/>
+      <line x1="400" y1="242" x2="460" y2="236"/><line x1="520" y1="250" x2="580" y2="238"/>
+      <line x1="640" y1="244" x2="700" y2="232"/><line x1="760" y1="248" x2="820" y2="236"/>
+      <line x1="50" y1="295" x2="110" y2="288"/><line x1="170" y1="300" x2="230" y2="290"/>
+      <line x1="290" y1="298" x2="350" y2="285"/><line x1="410" y1="295" x2="470" y2="288"/>
+      <line x1="530" y1="302" x2="590" y2="290"/><line x1="650" y1="296" x2="710" y2="284"/>
+      <line x1="770" y1="300" x2="830" y2="288"/>
+      <line x1="65" y1="350" x2="125" y2="342"/><line x1="185" y1="355" x2="245" y2="345"/>
+      <line x1="305" y1="352" x2="365" y2="340"/><line x1="425" y1="348" x2="485" y2="342"/>
+      <line x1="545" y1="358" x2="605" y2="345"/><line x1="665" y1="350" x2="725" y2="340"/>
+      <line x1="785" y1="355" x2="845" y2="342"/>
+      <!-- Vertical-ish connections -->
+      <line x1="40" y1="30" x2="60" y2="80"/><line x1="150" y1="40" x2="165" y2="140"/>
+      <line x1="270" y1="45" x2="285" y2="135"/><line x1="390" y1="38" x2="405" y2="138"/>
+      <line x1="510" y1="42" x2="525" y2="142"/><line x1="630" y1="48" x2="645" y2="136"/>
+      <line x1="750" y1="35" x2="765" y2="140"/><line x1="870" y1="40" x2="885" y2="135"/>
+      <line x1="60" y1="80" x2="45" y2="130"/><line x1="120" y1="75" x2="115" y2="178"/>
+      <line x1="240" y1="78" x2="225" y2="128"/><line x1="360" y1="72" x2="345" y2="122"/>
+      <line x1="480" y1="76" x2="465" y2="126"/><line x1="600" y1="80" x2="585" y2="130"/>
+      <line x1="720" y1="74" x2="705" y2="124"/><line x1="840" y1="78" x2="825" y2="128"/>
+      <line x1="45" y1="130" x2="55" y2="185"/><line x1="165" y1="140" x2="175" y2="192"/>
+      <line x1="285" y1="135" x2="295" y2="188"/><line x1="405" y1="138" x2="415" y2="190"/>
+      <line x1="525" y1="142" x2="535" y2="195"/><line x1="645" y1="136" x2="655" y2="188"/>
+      <line x1="765" y1="140" x2="775" y2="192"/>
+      <line x1="55" y1="185" x2="40" y2="240"/><line x1="175" y1="192" x2="160" y2="245"/>
+      <line x1="295" y1="188" x2="280" y2="248"/><line x1="415" y1="190" x2="400" y2="242"/>
+      <line x1="535" y1="195" x2="520" y2="250"/><line x1="655" y1="188" x2="640" y2="244"/>
+      <line x1="775" y1="192" x2="760" y2="248"/>
+      <line x1="100" y1="232" x2="110" y2="288"/><line x1="220" y1="235" x2="230" y2="290"/>
+      <line x1="340" y1="230" x2="350" y2="285"/><line x1="460" y1="236" x2="470" y2="288"/>
+      <line x1="580" y1="238" x2="590" y2="290"/><line x1="700" y1="232" x2="710" y2="284"/>
+      <line x1="820" y1="236" x2="830" y2="288"/>
+      <line x1="50" y1="295" x2="65" y2="350"/><line x1="170" y1="300" x2="185" y2="355"/>
+      <line x1="290" y1="298" x2="305" y2="352"/><line x1="410" y1="295" x2="425" y2="348"/>
+      <line x1="530" y1="302" x2="545" y2="358"/><line x1="650" y1="296" x2="665" y2="350"/>
+      <line x1="770" y1="300" x2="785" y2="355"/>
+      <line x1="65" y1="350" x2="45" y2="400"/><line x1="185" y1="355" x2="165" y2="408"/>
+      <line x1="305" y1="352" x2="285" y2="405"/><line x1="425" y1="348" x2="405" y2="400"/>
+      <line x1="545" y1="358" x2="525" y2="410"/><line x1="665" y1="350" x2="645" y2="404"/>
+      <line x1="785" y1="355" x2="765" y2="408"/>
+    </g>
+
+    <!-- ═══ TREE 1: Green — "What is gravity?" ═══ -->
+    <g id="tree1">
+      <!-- Activated edges (bright green, animated) -->
+      <line x1="210" y1="28" x2="240" y2="78" stroke="#6bcb77" stroke-width="2.5" opacity="0.8" class="tree-line"/>
+      <line x1="240" y1="78" x2="225" y2="128" stroke="#6bcb77" stroke-width="2.2" opacity="0.7" class="tree-line" style="animation-delay: 0.4s"/>
+      <line x1="225" y1="128" x2="235" y2="180" stroke="#6bcb77" stroke-width="2" opacity="0.6" class="tree-line" style="animation-delay: 0.8s"/>
+      <line x1="235" y1="180" x2="220" y2="235" stroke="#6bcb77" stroke-width="1.8" opacity="0.5" class="tree-line" style="animation-delay: 1.2s"/>
+      <line x1="220" y1="235" x2="230" y2="290" stroke="#6bcb77" stroke-width="1.5" opacity="0.4" class="tree-line" style="animation-delay: 1.6s"/>
+      <!-- Branch -->
+      <line x1="225" y1="128" x2="285" y2="135" stroke="#6bcb77" stroke-width="1.8" opacity="0.5" class="tree-line" style="animation-delay: 1s"/>
+      <line x1="285" y1="135" x2="295" y2="188" stroke="#6bcb77" stroke-width="1.5" opacity="0.4" class="tree-line" style="animation-delay: 1.4s"/>
+      <!-- Another branch -->
+      <line x1="240" y1="78" x2="180" y2="90" stroke="#6bcb77" stroke-width="1.8" opacity="0.5" class="tree-line" style="animation-delay: 0.6s"/>
+      <line x1="180" y1="90" x2="165" y2="140" stroke="#6bcb77" stroke-width="1.5" opacity="0.4" class="tree-line" style="animation-delay: 1s"/>
+
+      <!-- Activated nodes (bright green) -->
+      <circle cx="210" cy="28" r="6" fill="#6bcb77" opacity="0.95" class="glow-green"/>
+      <circle cx="240" cy="78" r="5.5" fill="#6bcb77" opacity="0.8"/>
+      <circle cx="225" cy="128" r="5" fill="#6bcb77" opacity="0.7"/>
+      <circle cx="235" cy="180" r="4.5" fill="#6bcb77" opacity="0.6"/>
+      <circle cx="220" cy="235" r="4" fill="#6bcb77" opacity="0.5"/>
+      <circle cx="230" cy="290" r="3.5" fill="#6bcb77" opacity="0.4"/>
+      <circle cx="285" cy="135" r="4.5" fill="#6bcb77" opacity="0.55"/>
+      <circle cx="295" cy="188" r="4" fill="#6bcb77" opacity="0.4"/>
+      <circle cx="180" cy="90" r="4.5" fill="#6bcb77" opacity="0.55"/>
+      <circle cx="165" cy="140" r="4" fill="#6bcb77" opacity="0.4"/>
+
+      <!-- Root label -->
+      <text x="210" y="16" text-anchor="middle" fill="#6bcb77" font-size="12" font-weight="600" opacity="0.9">"What is gravity?"</text>
+    </g>
+
+    <!-- ═══ TREE 2: Cyan — "Cook dinner" ═══ -->
+    <g id="tree2">
+      <line x1="630" y1="48" x2="600" y2="80" stroke="#4ac9b0" stroke-width="2.5" opacity="0.8" class="tree-line" style="animation-delay: 1.5s"/>
+      <line x1="600" y1="80" x2="585" y2="130" stroke="#4ac9b0" stroke-width="2.2" opacity="0.7" class="tree-line" style="animation-delay: 1.9s"/>
+      <line x1="585" y1="130" x2="595" y2="182" stroke="#4ac9b0" stroke-width="2" opacity="0.6" class="tree-line" style="animation-delay: 2.3s"/>
+      <line x1="595" y1="182" x2="580" y2="238" stroke="#4ac9b0" stroke-width="1.8" opacity="0.5" class="tree-line" style="animation-delay: 2.7s"/>
+      <!-- Branch -->
+      <line x1="585" y1="130" x2="645" y2="136" stroke="#4ac9b0" stroke-width="1.8" opacity="0.5" class="tree-line" style="animation-delay: 2.1s"/>
+      <line x1="645" y1="136" x2="655" y2="188" stroke="#4ac9b0" stroke-width="1.5" opacity="0.4" class="tree-line" style="animation-delay: 2.5s"/>
+      <line x1="645" y1="136" x2="705" y2="124" stroke="#4ac9b0" stroke-width="1.5" opacity="0.35" class="tree-line" style="animation-delay: 2.3s"/>
+      <!-- Branch left -->
+      <line x1="600" y1="80" x2="540" y2="92" stroke="#4ac9b0" stroke-width="1.8" opacity="0.5" class="tree-line" style="animation-delay: 2s"/>
+
+      <circle cx="630" cy="48" r="6" fill="#4ac9b0" opacity="0.95" class="glow-green"/>
+      <circle cx="600" cy="80" r="5.5" fill="#4ac9b0" opacity="0.8"/>
+      <circle cx="585" cy="130" r="5" fill="#4ac9b0" opacity="0.7"/>
+      <circle cx="595" cy="182" r="4.5" fill="#4ac9b0" opacity="0.6"/>
+      <circle cx="580" cy="238" r="4" fill="#4ac9b0" opacity="0.5"/>
+      <circle cx="645" cy="136" r="4.5" fill="#4ac9b0" opacity="0.55"/>
+      <circle cx="655" cy="188" r="4" fill="#4ac9b0" opacity="0.4"/>
+      <circle cx="705" cy="124" r="3.5" fill="#4ac9b0" opacity="0.35"/>
+      <circle cx="540" cy="92" r="4" fill="#4ac9b0" opacity="0.45"/>
+
+      <text x="630" y="36" text-anchor="middle" fill="#4ac9b0" font-size="12" font-weight="600" opacity="0.9">"Cook dinner"</text>
+    </g>
+
+    <!-- ═══ TREE 3: Yellow-green — "Am I being fair?" ═══ -->
+    <g id="tree3">
+      <line x1="460" y1="236" x2="470" y2="288" stroke="#a8d86e" stroke-width="2.2" opacity="0.7" class="tree-line" style="animation-delay: 2.8s"/>
+      <line x1="470" y1="288" x2="485" y2="342" stroke="#a8d86e" stroke-width="2" opacity="0.6" class="tree-line" style="animation-delay: 3.2s"/>
+      <line x1="485" y1="342" x2="465" y2="395" stroke="#a8d86e" stroke-width="1.8" opacity="0.5" class="tree-line" style="animation-delay: 3.6s"/>
+      <!-- Branch -->
+      <line x1="470" y1="288" x2="410" y2="295" stroke="#a8d86e" stroke-width="1.5" opacity="0.45" class="tree-line" style="animation-delay: 3.4s"/>
+      <line x1="470" y1="288" x2="530" y2="302" stroke="#a8d86e" stroke-width="1.5" opacity="0.45" class="tree-line" style="animation-delay: 3.4s"/>
+
+      <circle cx="460" cy="236" r="5.5" fill="#a8d86e" opacity="0.9"/>
+      <circle cx="470" cy="288" r="5" fill="#a8d86e" opacity="0.7"/>
+      <circle cx="485" cy="342" r="4.5" fill="#a8d86e" opacity="0.6"/>
+      <circle cx="465" cy="395" r="4" fill="#a8d86e" opacity="0.5"/>
+      <circle cx="410" cy="295" r="4" fill="#a8d86e" opacity="0.4"/>
+      <circle cx="530" cy="302" r="4" fill="#a8d86e" opacity="0.4"/>
+
+      <text x="460" y="224" text-anchor="middle" fill="#a8d86e" font-size="12" font-weight="600" opacity="0.9">"Am I being fair?"</text>
+    </g>
+
+    <!-- ═══ THE MIRROR: persistent purple cluster, lower-right ═══ -->
+    <defs>
+      <radialGradient id="mirrorGlowBig" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#d4a0d4" stop-opacity="0.12"/>
+        <stop offset="60%" stop-color="#d4a0d4" stop-opacity="0.05"/>
+        <stop offset="100%" stop-color="#d4a0d4" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="valueGlowBig" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffaa55" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#ffaa55" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <g id="mirror">
+      <!-- Ambient glow -->
+      <circle cx="850" cy="390" r="80" fill="url(#mirrorGlowBig)"/>
+
+      <!-- Mirror edges -->
+      <line x1="845" y1="342" x2="810" y2="370" stroke="#d4a0d4" stroke-width="1.8" opacity="0.6"/>
+      <line x1="845" y1="342" x2="885" y2="365" stroke="#d4a0d4" stroke-width="1.8" opacity="0.6"/>
+      <line x1="810" y1="370" x2="825" y2="410" stroke="#d4a0d4" stroke-width="1.5" opacity="0.5"/>
+      <line x1="885" y1="365" x2="870" y2="405" stroke="#d4a0d4" stroke-width="1.5" opacity="0.5"/>
+      <line x1="825" y1="410" x2="870" y2="405" stroke="#d4a0d4" stroke-width="1.2" opacity="0.4"/>
+      <line x1="810" y1="370" x2="775" y2="395" stroke="#d4a0d4" stroke-width="1.2" opacity="0.4"/>
+      <line x1="885" y1="365" x2="920" y2="390" stroke="#d4a0d4" stroke-width="1.2" opacity="0.4"/>
+      <line x1="825" y1="410" x2="845" y2="445" stroke="#d4a0d4" stroke-width="1" opacity="0.35"/>
+      <line x1="870" y1="405" x2="845" y2="445" stroke="#d4a0d4" stroke-width="1" opacity="0.35"/>
+
+      <!-- Value gravity wells -->
+      <circle cx="775" cy="395" r="20" fill="url(#valueGlowBig)" class="pulse-med"/>
+      <circle cx="920" cy="390" r="20" fill="url(#valueGlowBig)" class="pulse-med" style="animation-delay: 1.2s"/>
+
+      <!-- Mirror nodes -->
+      <circle cx="845" cy="342" r="6" fill="#d4a0d4" opacity="0.9" class="glow-purple"/>
+      <circle cx="810" cy="370" r="5" fill="#d4a0d4" opacity="0.7"/>
+      <circle cx="885" cy="365" r="5" fill="#d4a0d4" opacity="0.7"/>
+      <circle cx="825" cy="410" r="4.5" fill="#d4a0d4" opacity="0.6"/>
+      <circle cx="870" cy="405" r="4.5" fill="#d4a0d4" opacity="0.6"/>
+      <circle cx="845" cy="445" r="4" fill="#d4a0d4" opacity="0.5"/>
+
+      <!-- Value nodes -->
+      <circle cx="775" cy="395" r="5" fill="#ffaa55" opacity="0.9"/>
+      <circle cx="920" cy="390" r="5" fill="#ffaa55" opacity="0.9"/>
+
+      <!-- Labels -->
+      <text x="845" y="330" text-anchor="middle" fill="#d4a0d4" font-size="13" font-weight="600" opacity="0.9">The Mirror</text>
+      <text x="755" y="420" fill="#ffaa55" font-size="10" opacity="0.8">care</text>
+      <text x="910" y="415" fill="#ffaa55" font-size="10" opacity="0.8">curiosity</text>
+      <text x="845" y="468" text-anchor="middle" fill="#7744aa" font-size="10" opacity="0.6">always on</text>
+
+      <!-- Influence lines from Mirror to Tree 3 (purple dashed) -->
+      <line x1="775" y1="395" x2="530" y2="302" stroke="#d4a0d4" stroke-width="1" opacity="0.2" stroke-dasharray="4 4"/>
+      <line x1="810" y1="370" x2="485" y2="342" stroke="#d4a0d4" stroke-width="0.8" opacity="0.15" stroke-dasharray="4 4"/>
+    </g>
+
+    <!-- ═══ LABELS ═══ -->
+    <!-- Matrix label -->
+    <rect x="15" y="456" width="110" height="20" rx="4" fill="#0d0d18" opacity="0.8"/>
+    <text x="70" y="470" text-anchor="middle" fill="#2a4a7a" font-size="11" opacity="0.7">THE MATRIX — everything</text>
+
+    <!-- Legend -->
+    <g transform="translate(680, 15)">
+      <circle cx="0" cy="0" r="4" fill="#6bcb77" opacity="0.8"/>
+      <circle cx="0" cy="18" r="4" fill="#4ac9b0" opacity="0.8"/>
+      <circle cx="0" cy="36" r="4" fill="#a8d86e" opacity="0.8"/>
+      <circle cx="0" cy="54" r="4" fill="#d4a0d4" opacity="0.8"/>
+      <circle cx="0" cy="72" r="4" fill="#1a2a44" opacity="0.5"/>
+      <circle cx="0" cy="90" r="4" fill="#ffaa55" opacity="0.8"/>
+      <text x="12" y="4" fill="#6bcb77" font-size="10" opacity="0.7">Tree 1 — knowledge query</text>
+      <text x="12" y="22" fill="#4ac9b0" font-size="10" opacity="0.7">Tree 2 — procedural task</text>
+      <text x="12" y="40" fill="#a8d86e" font-size="10" opacity="0.7">Tree 3 — ethical reflection</text>
+      <text x="12" y="58" fill="#d4a0d4" font-size="10" opacity="0.7">Mirror — persistent self</text>
+      <text x="12" y="76" fill="#667788" font-size="10" opacity="0.7">Matrix — dormant memories</text>
+      <text x="12" y="94" fill="#ffaa55" font-size="10" opacity="0.7">Values — gravity wells</text>
+    </g>
+
+  </svg>
+</div>
+
+<!-- Key insights bar -->
+<div class="insight-bar animate-in" style="animation-delay: 1s">
+  <div class="insight">
+    <strong>No Hallucination</strong>
+    <span>Can only say what it can trace through the graph. No path = "I don't know."</span>
+  </div>
+  <div class="insight">
+    <strong>Clone & Diff</strong>
+    <span>Copy a mind, let it diverge. Compare what two versions believe differently.</span>
+  </div>
+  <div class="insight">
+    <strong>Living Memory</strong>
+    <span>Reconsolidation changes memories over time — just like yours do.</span>
+  </div>
+  <div class="insight">
+    <strong>Runs on a Laptop</strong>
+    <span>Graph + SQLite + LLM. No billion-parameter retraining. M2 MacBook Air.</span>
+  </div>
+</div>
+
+<div class="footer">
+  Associative Memory Architecture — Playful Sincerity Research — 2026
+</div>
+
+</body>
+</html>

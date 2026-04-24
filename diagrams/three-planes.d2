@@ -1,0 +1,153 @@
+direction: down
+
+title: |md
+  # Associative Memory
+  The graph IS the mind. Navigate, don't search.
+| {
+  style: {
+    font-size: 28
+    font-color: "#e0e0e0"
+    fill: "#0d1117"
+    stroke: "#0d1117"
+  }
+}
+
+# ── THE THREE PLANES ──
+
+matrix: The Matrix {
+  style: {
+    fill: "#1a1a2e"
+    stroke: "#4a90d9"
+    font-color: "#4a90d9"
+    font-size: 22
+    border-radius: 12
+    bold: true
+  }
+
+  desc: |md
+    **All memories. One graph.**
+    Nodes = concepts
+    Edges = "these co-occur"
+    Stronger links = stronger beliefs
+    Mostly dark — activated on demand
+  | {
+    style: {
+      fill: "#12122a"
+      stroke: "#2a4a7a"
+      font-color: "#8ab4e8"
+      font-size: 14
+      border-radius: 8
+    }
+  }
+}
+
+trees: Trees {
+  style: {
+    fill: "#1a2e1a"
+    stroke: "#6bcb77"
+    font-color: "#6bcb77"
+    font-size: 22
+    border-radius: 12
+    bold: true
+  }
+
+  desc: |md
+    **Thinking = growing a subgraph.**
+    Each tree IS a thought
+    Expands outward from "where you are"
+    Multiple trees = parallel ideas
+    Ephemeral — born, grow, die
+  | {
+    style: {
+      fill: "#122a12"
+      stroke: "#2a7a3a"
+      font-color: "#a8e6b0"
+      font-size: 14
+      border-radius: 8
+    }
+  }
+}
+
+mirror: The Mirror {
+  style: {
+    fill: "#2e1a2e"
+    stroke: "#d4a0d4"
+    font-color: "#d4a0d4"
+    font-size: 22
+    border-radius: 12
+    bold: true
+  }
+
+  desc: |md
+    **The continuous "I".**
+    Never dies. Always pruning.
+    Holds values as gravity wells
+    Produces emotions: curiosity,
+    urgency, caution, care
+    Makes the AI a someone
+  | {
+    style: {
+      fill: "#2a122a"
+      stroke: "#7a2a7a"
+      font-color: "#e0b0e0"
+      font-size: 14
+      border-radius: 8
+    }
+  }
+}
+
+# ── CONNECTIONS ──
+
+trees -> matrix: trees grow\nwithin the matrix {
+  style: {
+    stroke: "#6bcb77"
+    font-color: "#6bcb77"
+    font-size: 13
+    stroke-dash: 5
+  }
+}
+
+matrix -> trees: activation\nspreads along edges {
+  style: {
+    stroke: "#4a90d9"
+    font-color: "#4a90d9"
+    font-size: 13
+    stroke-dash: 5
+  }
+}
+
+mirror -> trees: emotions\nmodulate which\ntrees grow {
+  style: {
+    stroke: "#d4a0d4"
+    font-color: "#d4a0d4"
+    font-size: 13
+    stroke-dash: 5
+  }
+}
+
+trees -> mirror: experiences\nupdate self-model {
+  style: {
+    stroke: "#8ac98f"
+    font-color: "#8ac98f"
+    font-size: 13
+    stroke-dash: 5
+  }
+}
+
+# ── KEY INSIGHT ──
+
+insight: |md
+  **Why this matters**
+  - Can only say what it can trace through the graph = **no hallucination by design**
+  - Clone a mind, let it diverge, **diff the worldviews**
+  - Memories reconsolidate over time — **just like yours**
+  - Runs on a laptop. No retraining needed.
+| {
+  style: {
+    fill: "#1c1c1c"
+    stroke: "#ff9f43"
+    font-color: "#ffd5a0"
+    font-size: 14
+    border-radius: 10
+  }
+}

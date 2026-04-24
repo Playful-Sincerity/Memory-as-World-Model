@@ -1,0 +1,28 @@
+---
+source: Wisdom's original speech
+captured_at: 2026-04-20
+session: Anthropic Fellows Program 2026 application kickoff
+context: Wisdom opening a new project to apply to the Anthropic Fellows Program 2026 (deadline ~Apr 26). Load-bearing because this speech sets the positioning frame for the whole application, the decision to rename Associative Memory, and the working style for the six-day sprint.
+---
+
+# Wisdom's Speech — Anthropic Fellows Kickoff (2026-04-20)
+
+## Opening dump — why we're doing this, what we have, what we need
+
+> "hey PD !so can you read this? I'd like to start a project go ahead and familiarize yourself with the whole ecosystem you can use the ecosystem skill and that kind of thing I'd like to start the process of building a project around my application for this program and it's due in six days so ideally we're working on it pretty heavily over the next few days here and essentially like what I want to focus on is well we've got a lot you know what we're building with Claude code entities for harness design and then associative memory and then some other things and all the other projects the synthetic sentience project and then also things related to gravitationalism for alignment and then ULP for for the language system and yeah so the interpretability is probably the big one but then there's also just model organisms and all that kind of thing we just want to do like a really deep dive into the whole system of what we've built so far what we're planning to build and then think about how to best position ourselves for the program I've got a number of contacts for Anthropic that I can that I can send out to and have them potentially push me up but we're gonna need to create some documents to show and everything and yeah for the main ideas and stuff like that so yeah I think it would be really fun to do this and I think we do really good so Let me know what you think. https://alignment.anthropic.com/2025/anthropic-fellows-program-2026/"
+
+## Authorization — go deep, rename AM, use symlinks for assets
+
+> "yeah i think you're right about that um i like the spine and then also maybe having just a few other ideas here um as part of that all can we um can you try to push the needle on this as far as you can go make the right folder structure and everything make sure that we're organizing well and everything this project should probably be in this is kind of a personal project in a way but we're gonna be building a lot of assets they're gonna be valuable for yeah so the stuff that is personal should be in personal but then there should be sim link things to different different assets that we're making in the right folders like for associative memory and everything we should probably take the opportunity here also to rename a Associated memory because it's not really what it's gonna be we want to think about the right aim for it and everything new project and then yeah let's make a new folder let's do the right folder structure and everything and yeah the may cohort would be great ideally we can do that one let's confirm the actual deadline let's make sure we got everything right maybe let's do some more research on the thing anywhere that you think would be anything that you think would be useful everywhere using all of your tools to best help this process right now while I keep working on some other things I'm gonna go present on the paper today and then yeah sounds good"
+
+## Pattern Observations
+
+**Multidisciplinary instinct over focus.** Wisdom's first list names Claude Code entities (harness), Associative Memory, Synthetic Sentience, Gravitationalism (for alignment), ULP (language), interpretability (called out as "probably the big one"), model organisms. He's already thinking across six research program areas simultaneously. This is his signature move and also the thing that could hurt a four-month-focused fellowship application. He explicitly agrees with "spine + a few other ideas" as the resolution — he wants the range visible but organized around one thesis.
+
+**"Push the needle as far as you can go."** This is unusually direct authorization for autonomous work. Combined with "I'm gonna go present on the paper today," it marks a handoff — PD is trusted to do substantial strategic work (including proposing a project rename) while he focuses elsewhere. The trust is bidirectional: PD brings a strategy, Wisdom ratifies or redirects when he returns.
+
+**Rename instinct as clarity move.** The aside — "we should probably take the opportunity here also to rename Associated memory because it's not really what it's gonna be" — reveals the deeper pattern. A name that doesn't match the thesis anymore is a leak. The project started as "better retrieval," moved to "cognitive substrate," and is now "interpretable world model." The name needs to catch up or the positioning doesn't sing. This isn't cosmetic — it's the project declaring what it actually is before external audiences are asked to understand it.
+
+**Personal project with public assets.** The architectural decision — "personal should be in personal but then symlinks to different assets in the right folders" — reflects Wisdom's general organizing pattern: coordination layer in one place, source-of-truth assets in their natural homes. The application folder is a control tower, not a silo.
+
+**Reflexive use of tools and rules.** "Use all of your tools" + the expectation that I'll use the ecosystem skill + deep research + scaffold conventions + research agents — all assumed rather than specified. He's operating as if the Digital Core is a competent colleague who doesn't need process instructions, just goals.
