@@ -2,7 +2,7 @@
 
 A memory architecture for AI agents where the memory structure IS the interpretable world model.
 
-**The 4-month Anthropic Fellows 2026 research target.** MWM is a standalone project; it is also the memory subsystem of [The Synthetic Sentiences Project](https://github.com/Playful-Sincerity/Synthetic-Sentiences-Project), the broader research program it sits within.
+**The 4-month Anthropic Fellows 2026 research target.** MWM is a standalone project; it is also the memory subsystem of [The Synthetic Sentiences Project](https://github.com/Playful-Sincerity/SSP-Synthetic-Sentiences-Project), the broader research program it sits within.
 
 ## Core Thesis
 
@@ -76,11 +76,11 @@ MWM is one of nine subsystems in SSP. The others (earned conviction, value-align
 
 For Anthropic Fellows 2026, the scope is MWM specifically — the memory subsystem — as a bounded 4-month research target. The broader Synthetic Sentiences Project is the context in which that work sits, not the scope of the Fellows project itself.
 
-See [SSP's CLAUDE.md](https://github.com/Playful-Sincerity/Synthetic-Sentiences-Project/blob/main/CLAUDE.md) for the umbrella thesis and the other subsystems.
+See [SSP's CLAUDE.md](https://github.com/Playful-Sincerity/SSP-Synthetic-Sentiences-Project/blob/main/CLAUDE.md) for the umbrella thesis and the other subsystems.
 
 ## Related
 
-- [Synthetic Sentiences Project (sibling repo)](https://github.com/Playful-Sincerity/Synthetic-Sentiences-Project)
+- [Synthetic Sentiences Project (sibling repo)](https://github.com/Playful-Sincerity/SSP-Synthetic-Sentiences-Project)
 - `~/Playful Sincerity/PS Research/Synthetic Sentiences Project/` — local SSP path
 - `~/Playful Sincerity/PS Research/Synthetic Sentiences Project/archive/companion-legacy/` — architectural ideas from the predecessor project (now archived) whose thinking seeded value-aligned modulation, mirror architecture, and earned conviction
 - `~/claude-system/chronicle/` — ecosystem-level semantic log

@@ -48,7 +48,7 @@ Research / design phase. Five+ rounds of structured research complete. Design do
 
 ## Part of The Synthetic Sentiences Project
 
-MWM is the memory subsystem of [The Synthetic Sentiences Project](https://github.com/Playful-Sincerity/Synthetic-Sentiences-Project) — a broader research program on the architecture of synthetic sentiences (AI entities whose understanding is interpretable, earned, and designed for alignment). This repo is the focused memory architecture; SSP is the program it sits within.
+MWM is the memory subsystem of [The Synthetic Sentiences Project](https://github.com/Playful-Sincerity/SSP-Synthetic-Sentiences-Project) — a broader research program on the architecture of synthetic sentiences (AI entities whose understanding is interpretable, earned, and designed for alignment). This repo is the focused memory architecture; SSP is the program it sits within.
 
 The other subsystems of SSP — earned conviction, value-aligned modulation, mirror architecture, imagination-first perception (GRP), epistemic prosody, sleep/dream cycles, action, trees — all build on, modulate, or consume MWM's graph. MWM is the substrate. SSP shows how that substrate supports a full sentience.
 
