@@ -35,7 +35,7 @@ This is a major research direction in its own right. Full articulation at [desig
 
 ## Status
 
-Research / design phase. Five+ rounds of structured research complete. Design documents and vision established. No implementation code yet. Target: a working implementation + paper as the 4-month Anthropic Fellows 2026 research project.
+Research / design phase. Five+ rounds of structured research complete. Design documents and vision established. No implementation code yet. Target: a working implementation plus a companion implementation paper.
 
 ## Project Structure
 

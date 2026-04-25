@@ -2,7 +2,7 @@
 
 A memory architecture for AI agents where the memory structure IS the interpretable world model.
 
-**The 4-month Anthropic Fellows 2026 research target.** MWM is a standalone project; it is also the memory subsystem of [The Synthetic Sentiences Project](https://github.com/Playful-Sincerity/SSP-Synthetic-Sentiences-Project), the broader research program it sits within.
+MWM is a standalone project; it is also the memory subsystem of [The Synthetic Sentiences Project](https://github.com/Playful-Sincerity/SSP-Synthetic-Sentiences-Project), the broader research program it sits within.
 
 ## Core Thesis
 
@@ -56,7 +56,7 @@ src/                         — Implementation (when ready)
 
 ## Status
 
-Concept + research phase. Design docs drafted. No code yet. Target: 4-month Fellows implementation + paper.
+Concept + research phase. Design docs drafted. No code yet. Target: working implementation + paper.
 
 ## Active Research: Local Cognition
 
@@ -74,7 +74,7 @@ Two-system design: (a) a memory engine LLM optimized for reading/writing/explori
 
 MWM is one of nine subsystems in SSP. The others (earned conviction, value-aligned modulation, mirror architecture, imagination-first perception, epistemic prosody, sleep/dream cycles, action, trees) build on, modulate, or consume MWM's graph. MWM is the substrate; SSP shows how that substrate supports a full sentience.
 
-For Anthropic Fellows 2026, the scope is MWM specifically — the memory subsystem — as a bounded 4-month research target. The broader Synthetic Sentiences Project is the context in which that work sits, not the scope of the Fellows project itself.
+The focused scope of this repo is MWM specifically — the memory subsystem — as a bounded research target. The broader Synthetic Sentiences Project is the context in which that work sits.
 
 See [SSP's CLAUDE.md](https://github.com/Playful-Sincerity/SSP-Synthetic-Sentiences-Project/blob/main/CLAUDE.md) for the umbrella thesis and the other subsystems.
 

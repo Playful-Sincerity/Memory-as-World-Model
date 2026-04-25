@@ -29,7 +29,7 @@ in Which the Graph Replaces Pretrained Weights \\
 as the Locus of Belief}
 
 \author{Wisdom Happy\thanks{Correspondence: wisdomhappy@playfulsincerity.org. \\[0.5em]
-\textit{Methodology:} The core architectural framework presented in this paper---the thesis that memory structure is the world model, the Three Planes model (Matrix, Trees, Mirror), the reframing of cognition as an action system that thinks through memory, and the identification of the key mechanisms---was conceived and developed by the author, beginning with sustained thinking about agent memory architectures in late 2025 and crystallizing in March 2026. The formalization, literature positioning, and paper preparation were carried out using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic). The Digital Core orchestrates hierarchical planning, parallel agent-based research (six independent rounds of multi-stream subagents surveying 100+ primary sources across cognitive architectures, neuroscience, AI memory systems, and philosophy of mind), and continuous evolution tracking through semantic chronicles and design-doc versioning. Each of the architectural claims in this paper traces back to design documents, research synthesis files, or cross-stream convergence findings preserved in the project's public repository. This paper is a concept proposal; the 4-month Anthropic Fellows 2026 implementation target will produce a working prototype, a formal evaluation against the predictions in Section~\ref{sec:predictions}, and a companion implementation paper. The full design archive is available at \url{https://github.com/Playful-Sincerity/Memory-as-World-Model}.} \\[0.3em]
+\textit{Methodology:} The core architectural framework presented in this paper---the thesis that memory structure is the world model, the Three Planes model (Matrix, Trees, Mirror), the reframing of cognition as an action system that thinks through memory, and the identification of the key mechanisms---was conceived and developed by the author, beginning with sustained thinking about agent memory architectures in late 2025 and crystallizing in March 2026. The formalization, literature positioning, and paper preparation were carried out using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic). The Digital Core orchestrates hierarchical planning, parallel agent-based research (six independent rounds of multi-stream subagents surveying 100+ primary sources across cognitive architectures, neuroscience, AI memory systems, and philosophy of mind), and continuous evolution tracking through semantic chronicles and design-doc versioning. Each of the architectural claims in this paper traces back to design documents, research synthesis files, or cross-stream convergence findings preserved in the project's public repository. This paper is a concept proposal; the implementation phase will produce a working prototype, a formal evaluation against the predictions in Section~\ref{sec:predictions}, and a companion implementation paper. The full design archive is available at \url{https://github.com/Playful-Sincerity/Memory-as-World-Model}.} \\[0.3em]
 Playful Sincerity Research}
 
 \date{April 2026}
@@ -267,7 +267,7 @@ A proposal only earns its place if it makes predictions that can fail. MWM makes
 
 \textbf{Measurement.} Synthetic scale tests from \(10^{4}\) to \(10^{7}\) nodes. Measure traversal latency, edge-formation throughput, and memory footprint. Identify the breaking point where SQLite (the working-prototype backend) needs to be replaced by a dedicated graph database. Target: sub-second traversal at \(10^{6}\) nodes on commodity hardware.
 
-\textbf{Failure mode.} If traversal cost blows up before \(10^{6}\) nodes, the architecture has a latent scaling problem that needs to be addressed before the Fellows implementation ships.
+\textbf{Failure mode.} If traversal cost blows up before \(10^{6}\) nodes, the architecture has a latent scaling problem that needs to be addressed before the implementation ships.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -381,7 +381,7 @@ The commitment is clear; the execution is a research program. How densely does t
 
 These are the questions a dedicated research round (likely Round 7) will answer. The full articulation of the vision --- including a sketch of the node representation, contrasts with shared-latent approaches, and related prior work --- is in the project's \texttt{design/multimodal-unified-substrate.md}.
 
-For the Fellows implementation, the initial scope will be text-only. That is a scoping decision, not a permanent feature. The paper's claim is that MWM's interpretability commitment only fully holds when the substrate is unified across modalities, and that the search for that unified substrate is a major research direction in its own right --- a first-class part of what MWM is, not a footnote.
+For the initial implementation, the scope will be text-only. That is a scoping decision, not a permanent feature. The paper's claim is that MWM's interpretability commitment only fully holds when the substrate is unified across modalities, and that the search for that unified substrate is a major research direction in its own right --- a first-class part of what MWM is, not a footnote.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -495,6 +495,6 @@ All references are annotated briefly where the citation is load-bearing; full bi
 
 \emph{Correspondence:} wisdomhappy@playfulsincerity.org · \href{https://github.com/Playful-Sincerity/MWM-Memory-as-World-Model}{github.com/Playful-Sincerity/MWM-Memory-as-World-Model}
 
-\emph{This paper is a concept proposal. The 4-month Anthropic Fellows 2026 implementation target will produce a working prototype, a formal evaluation against the predictions in Section 5, and a companion implementation paper.}
+\emph{This paper is a concept proposal. The next stage is a working prototype, a formal evaluation against the predictions in Section 5, and a companion implementation paper.}
 
 \end{document}

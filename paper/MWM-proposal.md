@@ -225,7 +225,7 @@ A proposal only earns its place if it makes predictions that can fail. MWM makes
 
 **Measurement.** Synthetic scale tests from 10⁴ to 10⁷ nodes. Measure traversal latency, edge-formation throughput, and memory footprint. Identify the breaking point where SQLite (the working-prototype backend) needs to be replaced by a dedicated graph database. Target: sub-second traversal at 10⁶ nodes on commodity hardware.
 
-**Failure mode.** If traversal cost blows up before 10⁶ nodes, the architecture has a latent scaling problem that needs to be addressed before the Fellows implementation ships.
+**Failure mode.** If traversal cost blows up before 10⁶ nodes, the architecture has a latent scaling problem that needs to be addressed before the implementation ships.
 
 ---
 
@@ -339,7 +339,7 @@ The commitment is clear; the execution is a research program. How densely does t
 
 These are the questions a dedicated research round (likely Round 7) will answer. The full articulation of the vision — including a sketch of the node representation, contrasts with shared-latent approaches, and related prior work — is in the project's `design/multimodal-unified-substrate.md`.
 
-For the Fellows implementation, the initial scope will be text-only. That is a scoping decision, not a permanent feature. The paper's claim is that MWM's interpretability commitment only fully holds when the substrate is unified across modalities, and that the search for that unified substrate is a major research direction in its own right — a first-class part of what MWM is, not a footnote.
+For the initial implementation, the scope will be text-only. That is a scoping decision, not a permanent feature. The paper's claim is that MWM's interpretability commitment only fully holds when the substrate is unified across modalities, and that the search for that unified substrate is a major research direction in its own right — a first-class part of what MWM is, not a footnote.
 
 ---
 
@@ -449,4 +449,4 @@ All references are annotated briefly where the citation is load-bearing; full bi
 
 *Correspondence:* wisdomhappy@playfulsincerity.org · [github.com/Playful-Sincerity/MWM-Memory-as-World-Model](https://github.com/Playful-Sincerity/MWM-Memory-as-World-Model)
 
-*This paper is a concept proposal. The 4-month Anthropic Fellows 2026 implementation target will produce a working prototype, a formal evaluation against the predictions in Section 5, and a companion implementation paper.*
+*This paper is a concept proposal. The next stage is a working prototype, a formal evaluation against the predictions in Section 5, and a companion implementation paper.*
