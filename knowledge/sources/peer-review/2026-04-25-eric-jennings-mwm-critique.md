@@ -323,5 +323,29 @@ These are the questions a reviewer would want answered before treating MWM as a 
 > **Eric Jennings** [14:00]: Don't shrug off the potential 1000 fold worse latency shark, if folks are paying attention you will get asked about how to survive it. Then again maybe you got a a big boat?
 >
 > **Wisdom Happy** [14:02]: yeah for sure, thats gonna be a lot of work to figure. it would be incredible if we didn't have to sacrifice performance for interpretability. Curious to see whether or not that's even possible. If it's anti-hallucination, maybe that could make up for some speed, but it's probably mathematically impossible for it to be faster than the models today, right? I don't see how it couldn't be
+>
+> **Wisdom Happy** [14:04]: Computationally extravagant would be a good t-shirt haha
+>
+> **Wisdom Happy** [14:05]: Even with all of this, would you be willing to be an honest reference for me for the fellowship? Haha you can say I'm crazy if you'd like hahaha
+>
+> **Wisdom Happy** [14:06]: I'll update the paper tonight with some of these considerations too
+>
+> **Eric Jennings** [14:11]: I can be a reference but if I get asked about the validity of this I'm going to have to express my concerns over the performance, it would make me look like I didn't know what I was talking about, uh an idiot, if I didn't. I think it's creative though. Just you you know: Computationally Extravagant was the term generated after I asked the agent to be nice.
+>
+> **Eric Jennings** [14:12]: These are real issues though if you want to develop your plan
+>
+> **Wisdom Happy** [14:15]: Totally totally, of course, wouldn't ever ask for anything else. Hahahaha. Yeah, thank you, I really appreciate that, I had a feeling it would be bigger but I didn't really realize just how much more it might be. optimization needs to be a completely critical and core component of the research. And if it turns out it just won't work, I'll have to be good to pivot to something more manageable. Ok, what email would want them to reach to you with?
+>
+> **Eric Jennings** [14:18]: ejnoiz@gmail.com — This is also the e-mail for my LinkedIn, Eric Jennings
+>
+> **Wisdom Happy** [14:22]: Thank you my friend haha thanks for the good laughs
+>
+> **Eric Jennings** [14:23]: I hope you get the fellowship! Computer world needs some out of the box thinking!
+>
+> **Eric Jennings** [14:39]: See you at Frontier later
 
-Eric's tonal frame — "this was a quick fly-by, don't get too hung up on it" — pairs with his substantive ask: if MWM goes to a real review, the Big-O story has to land. He's not trying to kill the proposal; he's flagging that the load-bearing claims aren't yet defensible at the level real reviewers will press on.
+Eric's tonal frame — "this was a quick fly-by, don't get too hung up on it" / "computationally extravagant was the term generated after I asked the agent to be nice" — pairs with his substantive ask: if MWM goes to a real review, the Big-O story has to land. He's not trying to kill the proposal; he's flagging that the load-bearing claims aren't yet defensible at the level real reviewers will press on. The "I asked the agent to be nice" reveal is important calibration: the critique above is the *softened* version. The underlying assessment was sharper.
+
+**Reference status:** Eric agreed to be a fellowship reference for Wisdom, with the explicit caveat that if asked about the validity of MWM he will voice his performance concerns honestly — *"it would make me look like I didn't know what I was talking about, uh an idiot, if I didn't."* This is the standard to meet. The reference will say what he actually thinks; the paper revision needs to land or the reference becomes a real problem rather than an asset.
+
+**Reference contact:** ejnoiz@gmail.com (also LinkedIn under Eric Jennings).

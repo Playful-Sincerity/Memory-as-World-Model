@@ -137,3 +137,17 @@ Total revision: probably one focused 4-6 hour session, ideally in a fresh conver
 Start a fresh conversation specifically for this revision. The current chat has done its work and is heavy with context that doesn't serve the focused revision pass. New conversation with this document + the raw critique as the seed.
 
 Also: send Eric a thank-you when the revision lands. He gave the paper the kind of pressure-test it needs and did it as a friend, not as a competitor. That's worth acknowledging.
+
+## Update — Stakes Raised (2026-04-25 14:00–14:40)
+
+A follow-on exchange after the initial critique landed two important things:
+
+**1. Eric agreed to be a fellowship reference, with an honest-concerns caveat.** Verbatim: *"I can be a reference but if I get asked about the validity of this I'm going to have to express my concerns over the performance, it would make me look like I didn't know what I was talking about, uh an idiot, if I didn't."* This is exactly the right standard to meet — references will say what they actually think — and Wisdom said exactly the right thing in response: *"Totally totally, of course, wouldn't ever ask for anything else."* But it raises the stakes on the revision: if the paper still has the unconfronted compute story when the fellowship committee calls Eric, Eric will say so. Eric's contact for the reference: **ejnoiz@gmail.com** (also LinkedIn under Eric Jennings).
+
+**2. Eric revealed the critique above is the *softened* version.** Verbatim: *"Computationally Extravagant was the term generated after I asked the agent to be nice."* Translation: the underlying technical assessment is sharper than what's on the page. We should treat the critique as the floor of what a real reviewer would say, not the ceiling.
+
+**3. Wisdom committed to revising the paper "tonight"** and explicitly stated the right framing for the work: *"optimization needs to be a completely critical and core component of the research. And if it turns out it just won't work, I'll have to be good to pivot to something more manageable."* This is the right posture — strong attachment to the problem (interpretability-by-design), weak attachment to any specific architecture. Captured to `wisdom-profile/intellectual-signature.md` as a load-bearing pattern (non-attachment to architecture; attachment to the underlying problem).
+
+**Implication for the revision plan:** Treat as time-sensitive (tonight's session, before the fellowship application gets read). The three required changes (cut "almost interchangeable"; reframe "interpretable by design" → retrieval-interp + structured-context-rendering-interp; add Computational Tradeoffs section) are the minimum bar to clear before the paper goes anywhere a serious reviewer can press on it. The two sharpening changes (edge-type treatment; novelty framing) and the forward-references to design/research artifacts are nice-to-have for tonight; could land in a second pass.
+
+**Eric's closing energy:** *"I think it's creative though. ... I hope you get the fellowship! Computer world needs some out of the box thinking!"* He is rooting for the project to succeed. The revision is the path that lets him root publicly.
