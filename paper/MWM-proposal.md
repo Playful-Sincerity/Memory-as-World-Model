@@ -447,6 +447,6 @@ All references are annotated briefly where the citation is load-bearing; full bi
 
 ---
 
-*Correspondence:* wisdomhappy333@gmail.com · [github.com/Playful-Sincerity/Memory-as-World-Model](https://github.com/Playful-Sincerity/Memory-as-World-Model)
+*Correspondence:* wisdomhappy@playfulsincerity.org · [github.com/Playful-Sincerity/Memory-as-World-Model](https://github.com/Playful-Sincerity/Memory-as-World-Model)
 
 *This paper is a concept proposal. The 4-month Anthropic Fellows 2026 implementation target will produce a working prototype, a formal evaluation against the predictions in Section 5, and a companion implementation paper.*
