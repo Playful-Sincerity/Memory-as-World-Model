@@ -76,7 +76,8 @@ Playful Sincerity Research}
 \maketitle
 
 \begin{center}
-\textit{``Unfortunately, no one can be told what the Matrix is.''}\\[0.3em]
+\textit{``Unfortunately, no one can be told what the Matrix is. \\
+You have to see it for yourself.''}\\[0.3em]
 --- Morpheus, \textit{The Matrix} (1999)
 \end{center}
 \vspace{1em}
