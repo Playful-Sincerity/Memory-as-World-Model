@@ -354,7 +354,37 @@ If MWM (or architectures like it) becomes real, the LLM's role compresses. It st
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\section{8. Open Questions}\label{open-questions}
+\section{8. The Search for a Unified Substrate}\label{the-search-for-a-unified-substrate}
+
+The interpretability-by-design promise has a hard test hiding inside it. An agent whose life includes text \emph{and} images \emph{and} audio \emph{and} sensor streams \emph{and} inner states (imaginations, dreams, plans) has beliefs that cross modality boundaries. If those beliefs live in modality-specific, opaquely-embedded stores that are glued together only by shared-latent projections, then MWM's claim --- that the agent's world-model is directly readable --- ends precisely at the boundaries where the most interesting beliefs live. The interpretability holds for text and fails for everything else.
+
+What MWM commits to, instead, is a \emph{unified file structure for the memory store}: a single substrate in which a text memory, an image memory, an audio memory, a sensor reading, and an imagined scene are all first-class nodes of the same kind, readable by both the model and a human, connected by the same kinds of edges, traversed by the same kind of spreading activation. The binary content of a high-resolution image does not live inside the readable layer --- pixels live where pixels live. But the \emph{representation} of that image in the Matrix does. Every node's canonical layer is natural-language description; modality-specific data (pixel pointers, waveform pointers, modality-native embeddings for neighborhood search) hang off that readable layer rather than replacing it. Cross-modal edges are first-class: an edge from ``my mother's voice'' (an audio node) to ``a conversation about leaving home'' (a text node) is structurally identical to an edge between two text nodes. The graph topology is modality-agnostic; only the node content is modality-specific.
+
+\subsection{8.1 Why it has to be unified}\label{why-it-has-to-be-unified}
+
+Three reasons the unification can't be deferred.
+
+\textbf{Interpretability can't survive at the modality boundary.} If the text part of the graph is readable and the image part is a latent vector, the questions that most matter --- ``why does the agent believe this person is trustworthy?'', ``what's the evidence chain behind this inference?'' --- often trace through non-text memories. A partially-interpretable substrate produces partially-interpretable beliefs. The promise either holds end-to-end or it degrades to a claim about one modality.
+
+\textbf{Meaning often lives in the co-occurrence across modalities.} A memory of a conversation is not just the words. It is the words, the voice, the felt emotion, the visual context, the before-and-after. If these live in separate stores connected only through abstract embeddings, the semantic structure of \emph{what that moment meant} is fragmented across stores. If they live in a unified substrate with explicit edges between nodes, the meaning is preserved as graph topology --- readable, diffable, inspectable.
+
+\textbf{Imagination and dreams require it natively.} The architecture posits imagination as the same mechanism as perception with lower sensory precision --- the Tree running on priors rather than input. Recombinative imagination (consolidation replaying and recombining existing structure) produces novel configurations that \emph{cross modalities}: visualizing something from a textual description; hearing a melody from a remembered emotion; dreaming a scene that is visual and auditory and felt. A Tree that recombines across modalities needs a Matrix whose nodes are in a unified space. A dream is not a blend of an image embedding and a text embedding and an audio embedding --- it is a Tree growing through the Matrix, rendering nodes regardless of their modality. For the rendering to be coherent, the substrate must be one thing.
+
+\subsection{8.2 What it isn't}\label{what-it-isnt}
+
+This commitment is \emph{not} a unified embedding space in the SONAR or universal-sentence-encoder sense. Those systems compress multi-modal content into a shared latent vector. That is opaque unification. MWM's bet is the opposite: legible unification --- the unification happens at the level of node representation, edge semantics, and file-structure format, not at the level of a shared latent. Modality-specific encoders (vision, audio, OCR) are still useful; they do their processing work and then \emph{write into} a unified substrate. The unification is at the storage and retrieval layer, not at the processing layer.
+
+\subsection{8.3 The open research questions}\label{the-open-research-questions}
+
+The commitment is clear; the execution is a research program. How densely does the text layer need to describe non-text content --- caption-level? object-level? spatial-layout-level? art-historical-context-level? Who writes the description at encode time, and how is it updated over time as the agent's understanding deepens (reconsolidation as re-description)? How does traversal-activation weight cross-modal edges against intra-modal edges? Is the ``text as canonical readable layer'' commitment a feature or a constraint as models become better at reading raw multimodal content directly? What extensibility pattern survives the introduction of modalities that don't yet exist?
+
+These are the questions a dedicated research round (likely Round 7) will answer. The full articulation of the vision --- including a sketch of the node representation, contrasts with shared-latent approaches, and related prior work --- is in the project's \texttt{design/multimodal-unified-substrate.md}.
+
+For the Fellows implementation, the initial scope will be text-only. That is a scoping decision, not a permanent feature. The paper's claim is that MWM's interpretability commitment only fully holds when the substrate is unified across modalities, and that the search for that unified substrate is a major research direction in its own right --- a first-class part of what MWM is, not a footnote.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{9. Open Questions}\label{open-questions}
 
 The architecture is well-specified enough to build. These are the questions I do not yet have answers to, in roughly decreasing order of priority.
 
@@ -370,7 +400,7 @@ The architecture is well-specified enough to build. These are the questions I do
 
 \textbf{Control precedence in the Mirror.} When competing modulators fire --- urgency says act, caution says wait --- which wins? Simple argmax over intensities? Value-alignment-weighted? Learned from experience? Round 6 surfaced this; it remains open.
 
-\textbf{The unified multimodal substrate.} Language is the first modality; images, audio, sensor data, and inner states (imaginations, dreams, plans) come next. The load-bearing commitment is that \emph{the same substrate that makes text memories interpretable must carry non-text memories too} --- otherwise interpretability ends at the modality boundary, and the most interesting beliefs (the ones that connect modalities) hide precisely where MWM claims to be transparent. Today's multimodal systems unify via opaque shared-latent embeddings; MWM's bet is on \emph{legible} unification --- a single node format whose canonical layer is natural language description, with modality-specific data (pixels, waveforms, sensor readings) as pointers and embeddings hanging off the readable layer, and cross-modal edges as first-class as intra-modal ones. Imagination and dreams require this natively: a recombinative Tree that crosses modalities needs a Matrix whose nodes live in a unified space. How densely should the text layer describe non-text content? Who writes and updates those descriptions over time (the agent, reconsolidation, a vision-language model)? How does traversal-activation weight cross-modal edges? What extensibility pattern survives the introduction of modalities we haven't invented yet? This is a major research direction in its own right --- see \texttt{design/multimodal-unified-substrate.md} for the full articulation.
+\textbf{Multimodal substrate details.} The \emph{commitment} to a unified multimodal substrate is elevated to its own section above (Section 8). The questions that section raises --- text-layer density, who writes and updates descriptions, cross-modal traversal weighting, extensibility --- are the research program underneath the commitment.
 
 \textbf{The planning horizon.} The Mirror handles immediate evaluation well. Future-directed intentions --- what the agent is doing in a week, a month --- are not yet specified. How does a multi-session plan persist and constrain present Trees?
 
@@ -380,7 +410,7 @@ The architecture is well-specified enough to build. These are the questions I do
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\section{9. A Note on Framing}\label{a-note-on-framing}
+\section{10. A Note on Framing}\label{a-note-on-framing}
 
 The title of this paper is \emph{Memory as World Model}, not \emph{A Memory System for Agents}. That is a deliberate choice.
 

@@ -25,6 +25,14 @@ The question *"why does this agent believe X?"* answers by tracing a path in the
 - **Trees** — the active working context, growing and shrinking through spreading activation
 - **Mirror** — the persistent self-observation layer holding values and self-model
 
+## The Search for a Unified Substrate
+
+MWM's interpretability promise only fully holds when the substrate is unified across modalities. An agent whose life includes text *and* images *and* audio *and* sensor streams *and* inner states (imaginations, dreams, plans) has beliefs that cross modality boundaries. If those beliefs live in modality-specific opaque stores glued together by shared-latent projections, the interpretability ends precisely at the modality boundaries where the most interesting beliefs live.
+
+What MWM commits to instead is a *unified file structure for the memory store* — a single substrate in which a text memory, an image memory, an audio memory, a sensor reading, and an imagined scene are all first-class nodes of the same kind, readable by both the model and a human, connected by the same kinds of edges. Every node's canonical layer is natural-language description; modality-specific data (pixel pointers, waveform pointers, modality-native embeddings) hang off the readable layer rather than replacing it. Cross-modal edges are first-class. The graph topology is modality-agnostic; only the node content is modality-specific.
+
+This is a major research direction in its own right. Full articulation at [design/multimodal-unified-substrate.md](design/multimodal-unified-substrate.md); elevated in the paper at Section 8.
+
 ## Status
 
 Research / design phase. Five+ rounds of structured research complete. Design documents and vision established. No implementation code yet. Target: a working implementation + paper as the 4-month Anthropic Fellows 2026 research project.
