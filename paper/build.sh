@@ -66,7 +66,7 @@ in Which the Graph Replaces Pretrained Weights \\
 as the Locus of Belief}
 
 \author{Wisdom Happy\thanks{Correspondence: wisdomhappy@playfulsincerity.org. \\[0.5em]
-\textit{Methodology:} The core architectural framework presented in this paper---the thesis that memory structure is the world model, the Three Planes model (Matrix, Trees, Mirror), the reframing of cognition as an action system that thinks through memory, and the identification of the key mechanisms---was conceived and developed by the author, beginning with sustained thinking about agent memory architectures in late 2025 and crystallizing in March 2026. The formalization, literature positioning, and paper preparation were carried out using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic). The Digital Core orchestrates hierarchical planning, parallel agent-based research (six independent rounds of multi-stream subagents surveying 100+ primary sources across cognitive architectures, neuroscience, AI memory systems, and philosophy of mind), and continuous evolution tracking through semantic chronicles and design-doc versioning. Each of the architectural claims in this paper traces back to design documents, research synthesis files, or cross-stream convergence findings preserved in the project's public repository. This paper is a concept proposal; the implementation phase will produce a working prototype, a formal evaluation against the predictions in Section~\ref{sec:predictions}, and a companion implementation paper. The full design archive is available at \url{https://github.com/Playful-Sincerity/Memory-as-World-Model}.} \\[0.3em]
+\textit{Methodology:} The core architectural framework presented in this paper---the thesis that memory structure is the world model, the Three Planes model (Matrix, Trees, Mirror), the reframing of cognition as an action system that thinks through memory, and the identification of the key mechanisms---was conceived and developed by the author, beginning with sustained thinking about agent memory architectures in late 2025 and crystallizing in March 2026. The formalization, literature positioning, and paper preparation were carried out using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic). The Digital Core orchestrates hierarchical planning, parallel agent-based research (six independent rounds of multi-stream subagents surveying 100+ primary sources across cognitive architectures, neuroscience, AI memory systems, and philosophy of mind), and continuous evolution tracking through semantic chronicles and design-doc versioning. Each of the architectural claims in this paper traces back to design documents, research synthesis files, or cross-stream convergence findings preserved in the project's public repository. This paper is a concept proposal; the implementation phase will produce a working prototype, a formal evaluation against the predictions in Section~\ref{predictions-and-measurements}, and a companion implementation paper. The full design archive is available at \url{https://github.com/Playful-Sincerity/Memory-as-World-Model}.} \\[0.3em]
 Playful Sincerity Research}
 
 \date{April 2026}
@@ -93,13 +93,10 @@ We frame the architectural inversion, lay out the Three Planes model (Matrix, Tr
 
 LATEX_PREAMBLE
 
-# 4. Append body. Add a label anchor to Section 5 for the methodology footnote \ref.
+# 4. Append body. Pandoc auto-generates \label{predictions-and-measurements}
+#    on the Section 5 header; the methodology footnote refs that label directly,
+#    so no post-build label injection is needed.
 cat _body.tex >> MWM-proposal.tex
-
-# 4b. Insert a \label{sec:predictions} into the Predictions section so the
-#     methodology footnote's \ref resolves. Pandoc generates \section{...Predictions...}
-#     — add a \label immediately after the first occurrence.
-sed -i '' 's@\(\\section{5\\. Predictions and Measurements}\)@\1\\label{sec:predictions}@' MWM-proposal.tex
 
 # 5. Close the document.
 echo '' >> MWM-proposal.tex

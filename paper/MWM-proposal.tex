@@ -29,7 +29,7 @@ in Which the Graph Replaces Pretrained Weights \\
 as the Locus of Belief}
 
 \author{Wisdom Happy\thanks{Correspondence: wisdomhappy@playfulsincerity.org. \\[0.5em]
-\textit{Methodology:} The core architectural framework presented in this paper---the thesis that memory structure is the world model, the Three Planes model (Matrix, Trees, Mirror), the reframing of cognition as an action system that thinks through memory, and the identification of the key mechanisms---was conceived and developed by the author, beginning with sustained thinking about agent memory architectures in late 2025 and crystallizing in March 2026. The formalization, literature positioning, and paper preparation were carried out using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic). The Digital Core orchestrates hierarchical planning, parallel agent-based research (six independent rounds of multi-stream subagents surveying 100+ primary sources across cognitive architectures, neuroscience, AI memory systems, and philosophy of mind), and continuous evolution tracking through semantic chronicles and design-doc versioning. Each of the architectural claims in this paper traces back to design documents, research synthesis files, or cross-stream convergence findings preserved in the project's public repository. This paper is a concept proposal; the implementation phase will produce a working prototype, a formal evaluation against the predictions in Section~\ref{sec:predictions}, and a companion implementation paper. The full design archive is available at \url{https://github.com/Playful-Sincerity/Memory-as-World-Model}.} \\[0.3em]
+\textit{Methodology:} The core architectural framework presented in this paper---the thesis that memory structure is the world model, the Three Planes model (Matrix, Trees, Mirror), the reframing of cognition as an action system that thinks through memory, and the identification of the key mechanisms---was conceived and developed by the author, beginning with sustained thinking about agent memory architectures in late 2025 and crystallizing in March 2026. The formalization, literature positioning, and paper preparation were carried out using the Playful Sincerity Digital Core---an AI-assisted research methodology system built on Claude Code (Anthropic). The Digital Core orchestrates hierarchical planning, parallel agent-based research (six independent rounds of multi-stream subagents surveying 100+ primary sources across cognitive architectures, neuroscience, AI memory systems, and philosophy of mind), and continuous evolution tracking through semantic chronicles and design-doc versioning. Each of the architectural claims in this paper traces back to design documents, research synthesis files, or cross-stream convergence findings preserved in the project's public repository. This paper is a concept proposal; the implementation phase will produce a working prototype, a formal evaluation against the predictions in Section~\ref{predictions-and-measurements}, and a companion implementation paper. The full design archive is available at \url{https://github.com/Playful-Sincerity/Memory-as-World-Model}.} \\[0.3em]
 Playful Sincerity Research}
 
 \date{April 2026}
@@ -68,9 +68,9 @@ Three claims follow from the thesis.
 
 \textbf{Second, the LLM's weights are most useful when they are doing what they are unambiguously good at.} Frontier models are extraordinary at local language inference, summarization, surface-level semantic matching, and disambiguation. They are less good at holding a consistent belief set across sessions, resisting plausible-sounding false claims, or explaining why they said what they said. Putting beliefs in the graph plays to the LLM's strengths and away from its weaknesses.
 
-\textbf{Third, interpretability-by-design is cheaper and more reliable than interpretability-by-autopsy.} If the representation was built to be read from the start, reading it is not a research program --- it is a \texttt{SELECT} statement. Mechanistic interpretability in frontier models is a heroic effort that may or may not scale. An architecture where the belief-state is already the artifact produces interpretability as a byproduct of normal operation.
+\textbf{Third, the interpretability frontier moves.} If the representation was built to be read from the start, reading it is not a research program --- it is a \texttt{SELECT} statement. The belief-state, the evidence chains, the values, the recent updates --- all are inspectable as graph structure. What does \emph{not} become a \texttt{SELECT} statement is the LLM's forward pass that turns a rendered subgraph into a sentence. That step is still a transformer doing transformer things. MWM's contribution at the interpretability layer is therefore precise: it makes \emph{retrieval} interpretable by construction, and it leaves the \emph{rendering} step opaque --- but over a smaller, semantically clean, structured input. The original problem (``why did this output appear?'') is decomposed into a part the architecture solves natively and a part that still needs interpretability research, but on a much more tractable surface than arbitrary natural language. The right framing is ``interpretable retrieval, with reduced rendering opacity,'' not ``interpretability solved.''
 
-This is not a proposal to replace pretrained weights. It is a proposal to \emph{redistribute} the work they currently do. Language stays in the LLM. Knowledge moves to the graph. Reasoning moves to a symbolic/numeric tool. Each component carries the load it is suited for.
+This is not a proposal to replace pretrained weights. It is a proposal to \emph{redistribute} the work they currently do. Language stays in the LLM. Knowledge moves to the graph. Reasoning moves to a symbolic/numeric tool. Each component carries the load it is suited for. The bet is that this redistribution makes the agent's beliefs auditable and correctable; the cost story for that bet is engaged with explicitly in Section 6.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -135,11 +135,15 @@ Everything the agent has ever experienced, learned, inferred, or valued lives in
 
 Most of the Matrix is dark at any given moment. Only the regions currently being rendered by an active Tree are ``lit up.'' Most nodes sit unreferenced, their existence purely potential, waiting for something to reach them through an associative link.
 
-\textbf{Nodes} carry: content (a piece of text, or --- for multimodal memories --- a natural-language description of an image, audio clip, sensor reading, or inner state, with pointers and modality-specific embeddings hanging off the readable text layer), confidence (how much the agent currently trusts this), evidence (which other nodes support or are supported by this one), timestamps (when first encoded, when last traversed), and a priority weight that governs resistance to pruning and decay. The invariant is that every node's canonical representation is text the model and a human can read; modality-specific content rides on that readable layer rather than replacing it. See Section 8 and the \texttt{design/multimodal-unified-substrate.md} research note for why this unified-substrate choice is load-bearing rather than incidental.
+\textbf{Nodes} carry: content (a piece of text, or --- for multimodal memories --- a natural-language description of an image, audio clip, sensor reading, or inner state, with pointers and modality-specific embeddings hanging off the readable text layer), confidence (how much the agent currently trusts this), evidence (which other nodes support or are supported by this one), timestamps (when first encoded, when last traversed), and a priority weight that governs resistance to pruning and decay. The invariant is that every node's canonical representation is text the model and a human can read; modality-specific content rides on that readable layer rather than replacing it. See Section 9 and the \texttt{design/multimodal-unified-substrate.md} research note for why this unified-substrate choice is load-bearing rather than incidental.
 
 \textbf{Edges} are first-class. An edge is not merely a connection; it is a relationship with its own type, semantics, strength, and provenance. Edges carry linguistic descriptions of \emph{why} two nodes are related. Edges are themselves nodes in a bipartite structure, which is what makes analogy and second-order reasoning possible: the system can reason about relations between relations, not just between objects.
 
-\textbf{The Matrix updates in two ways.} Between interactions, consolidation runs --- replaying recent episodes, promoting stable patterns to semantic nodes, invalidating contradictions, merging redundant traces. During interactions, Hebbian strengthening fires: nodes rendered together in a Tree get new or strengthened edges between them. This is the learning mechanism. Co-occurrence \emph{is} the learning. Nothing is trained.
+The graph supports multiple edge \emph{types}, and each does different work. Hebbian co-occurrence edges form by experience and provide the substrate of association --- they are necessary but, on their own, would carry the same structural limits PMI/LSA/HAL hit historically. On top of that substrate, the architecture posits three additional first-class edge types that do most of the load-bearing work for higher-order reasoning. \textbf{Causal edges} carry direction and Pearl Layer 2 semantics --- they are inferred from interventional episodes during consolidation (see §4.2) and let the agent reason about counterfactuals and forward-model the consequences of action. \textbf{Affordance edges} connect objects/contexts to action-possibilities, grounding the agent's pragmatic understanding in what can be \emph{done} with a thing rather than only what it co-occurs with. \textbf{Second-order/analogical edges} connect \emph{edges to edges}, supporting reasoning about relations between relations (the structure-mapping move at the heart of analogy). Co-occurrence is the substrate; causal, affordance, and second-order edges are the structure that makes the substrate carry meaning. Treating co-occurrence as the only association mechanism is exactly the move that produces a brittle, superstition-prone graph; the architecture explicitly rejects that reduction. Reconsolidation (every traversal is a write) further protects the system: superstitious or accidentally-formed associations decay if they are never reinforced through use, while load-bearing beliefs are repeatedly strengthened.
+
+A note on pretrained embeddings: the architecture does not reject them. Off-the-shelf embeddings continue to play a real role in \emph{novel-edge formation} (computing similarity between newly-encoded nodes when no experiential edge yet exists) and \emph{modality-internal neighborhood lookup} (finding candidate neighbors during tree growth before experiential edges have had time to form). What pretrained embeddings do \emph{not} do is carry the agent's canonical belief structure --- that lives in the graph topology, not the latent space. The relationship is one of demotion, not rejection: embeddings support graph construction; the graph carries the world-model.
+
+\textbf{The Matrix updates in two ways.} Between interactions, consolidation runs --- replaying recent episodes, promoting stable patterns to semantic nodes, invalidating contradictions, merging redundant traces, and inferring causal edges from interventional sequences. During interactions, Hebbian strengthening fires: nodes rendered together in a Tree get new or strengthened co-occurrence edges between them. This is the substrate-level learning mechanism. Higher-order edge types (causal, affordance, analogical) emerge from consolidation operating on the substrate, not from pretrained gradient descent. Nothing is trained in the standard sense.
 
 \subsection{3.2 The Trees --- working memory as tree growth}\label{the-trees-working-memory-as-tree-growth}
 
@@ -253,13 +257,17 @@ A proposal only earns its place if it makes predictions that can fail. MWM makes
 
 \textbf{Failure mode.} If designed modulators consistently underperform emergent ones at the functional level, there may be a reason emotion-analog behavior is hard to factor out of the weights. That would be a finding worth publishing in either direction.
 
-\subsection{5.4 Structural interpretability}\label{structural-interpretability}
+\subsection{5.4 Structural interpretability of retrieval}\label{structural-interpretability-of-retrieval}
 
-\textbf{Prediction.} A researcher with no access to the LLM's weights, given only the Matrix, can reconstruct (a) the agent's current beliefs about a specified domain, (b) the evidence chain for any specified belief, (c) the agent's current values, and (d) recent changes to its belief-set, without any model inference.
+\textbf{Prediction (what graph-only audits \emph{can} answer).} A researcher with no access to the LLM's weights, given only the Matrix, can reconstruct (a) the agent's current beliefs about a specified domain, (b) the evidence chain supporting any specified belief, (c) the agent's current values, and (d) recent changes to its belief-set, without any model inference. These are properties of graph topology and node content; reading them is a query, not a probe.
 
-\textbf{Measurement.} Blind-audit protocol. Researcher is given a Matrix snapshot and a set of questions. Researcher must answer without querying the LLM. Compare answers to the agent's behavior under the same questions. High agreement rate on (a)--(d) supports the architecture's interpretability claim.
+\textbf{Out of scope (what graph-only audits \emph{cannot} answer).} A graph-only audit cannot fully explain why the LLM phrased its response one way rather than another given the same rendered subgraph. The forward pass that turns the Tree into a sentence is still a transformer, and surface-form choices, register, framing, and disambiguation that happen at rendering time remain on the wrong side of the interpretability frontier. The claim of this prediction is bounded: the \emph{retrieval and belief-state} are interpretable by construction; the \emph{rendering layer} is not.
 
-\textbf{Failure mode.} If graph-only audits disagree systematically with runtime behavior, the LLM is doing more than traversal --- it is inferring beyond what the graph supports, which means the graph is not the primary belief substrate. That would falsify the thesis.
+\textbf{Why this is still a meaningful win.} The rendering step happens over a much smaller and more structured input than the agent's full knowledge. Interpretability techniques (sparse autoencoders, probes, circuit-finding) have far more traction over a small, semantically clean context than over the open distribution of natural language. MWM does not solve rendering opacity; it shrinks the surface that opacity sits on, while making everything upstream of rendering auditable.
+
+\textbf{Measurement.} Blind-audit protocol. Researcher is given a Matrix snapshot and a set of questions. Researcher must answer (a)--(d) without querying the LLM. Compare answers to the agent's behavior under the same questions. High agreement rate on (a)--(d) supports the bounded interpretability claim. A separate sub-experiment can characterize the gap: cases where the agent's behavior matches what the graph predicts (interpretability holds) versus cases where rendering choices materially shift the behavior (rendering opacity is doing work the graph audit missed).
+
+\textbf{Failure mode.} If graph-only audits disagree systematically with runtime behavior on (a)--(d), the LLM is inferring beyond what the graph supports, which means the graph is not the primary belief substrate. That would falsify the thesis. Disagreement on rendering-style questions (tone, phrasing, framing) is \emph{expected} and is not a falsifier --- it is the bounded scope of the claim.
 
 \subsection{5.5 Scaling behavior}\label{scaling-behavior}
 
@@ -271,11 +279,52 @@ A proposal only earns its place if it makes predictions that can fail. MWM makes
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\section{6. Relationship to Prior Work}\label{relationship-to-prior-work}
+\section{6. Computational Tradeoffs}\label{computational-tradeoffs}
 
-MWM inherits a great deal from decades of work in cognitive architectures, neurosymbolic systems, and memory-augmented LLMs. The contribution is not in any single mechanism --- spreading activation is from 1975, Hebbian edge learning is older, ACT-R formalized activation in the 1990s. The contribution is in \emph{what the graph is for} and \emph{how the agent lives inside it}.
+\begin{quote}
+\emph{``Computationally extravagant.''}
+--- a reviewing LLM agent, asked to be nice
+\end{quote}
 
-\subsection{6.1 Memory-augmented LLM systems}\label{memory-augmented-llm-systems}
+This section is concept-stage thinking about what MWM will cost. The architecture is not yet implemented; the figures below are projections from the design and from comparison with the prior art the architecture builds on, not measurements. The point of stating them at all is to make the tradeoff explicit so the implementation phase has a clear target to work against --- and so a reader does not have to land on the cost question themselves.
+
+\subsection{6.1 Latency}\label{latency}
+
+A frontier LLM serves a response in a single dense forward pass on GPU. MWM does more. It grows a tree through the experiential graph, invokes the LLM to render local neighborhoods (possibly more than once for a single thought), writes back to the graph through reconsolidation, and runs the Mirror in the background. Per-response latency is going to reflect that --- substantially worse than a baseline LLM, by some multiplicative factor on the LLM cost plus a graph-traversal term that grows with the agent's lifetime. Whether that factor is 2× or 100× is exactly the kind of question only a working prototype can answer; the projection isn't precise enough to defend a specific number.
+
+The framing that matters more than per-token throughput is \emph{end-to-end task cost}. For tasks where current LLM pipelines need heavy downstream verification --- fact-checking, source-tracing, hallucination correction, retries inside agentic loops, human-in-the-loop validation for high-stakes decisions --- verification dominates the cost picture. MWM moves verification \emph{into} the architecture: the path is the trace, the trace is the audit, and the agent does not produce claims whose provenance is not already structural. Per-token slower; per-trustworthy-task possibly comparable. That comparison itself is one of the things the implementation phase is set up to measure. The architecture is not defensible for tasks where raw throughput is the binding constraint; it is targeted at tasks where the bottleneck is \emph{trust}.
+
+\subsection{6.2 Storage}\label{storage}
+
+Per-agent storage scales with the experiential graph, and the working regime is much more tractable than the asymptotic ceiling. The two should not be conflated.
+
+A practical agent --- assistant, research collaborator, domain specialist --- operating over years of experience is expected to sit at \(N \sim 10^5\)--\(10^7\) nodes, comparable to neurological estimates of human episodic memory. At those scales, with reasonable per-node descriptions and average degree, the agent comes in at the gigabyte level --- comparable to today's local LLMs and tractable on commodity hardware. This is the regime the architecture is built for.
+
+The asymptotic ceiling --- \(N \to 10^9\) and the storage moving into terabytes, scaling linearly across agents because the spawning vision does not amortize the way pretrained weights do --- is a real upper bound, not a near-term blocker. Multi-agent amortization (shared common-knowledge subgraphs) is an obvious direction; it is also genuinely open. The claim is not that the asymptotic case is solved. The claim is that the worst-case projection is not the working regime, and the architecture's near-term value is testable at scales where storage is straightforwardly tractable.
+
+\subsection{6.3 Hardware}\label{hardware}
+
+GPUs prefer dense matmul; graph traversal is pointer-chasing --- irregular, cache-hostile, CPU-bound. The mismatch is real. In the working architecture, GPU and CPU work are factored: the LLM forward passes still run on GPU, and only the graph traversal happens CPU-side. The mismatch costs on traversal, not on the forward-pass work.
+
+The longer-horizon response is one of MWM's separate research directions: a graph-tuned compute substrate that asks what hardware and software architecture would be optimized specifically for the graph-as-mind substrate (see \href{../research/compute-architecture/}{\texttt{research/compute-architecture/}}). That direction depends on the core architecture maturing first; it is real work that has to happen if the architecture proves out, not a hand-wave.
+
+\subsection{6.4 The bet}\label{the-bet}
+
+MWM accepts a worse cost frontier in exchange for structural belief-traceability, value-readability, and swappability across model upgrades --- properties the baseline cannot match at any cost. The trade is not universal, and we are not claiming the architecture is universally cheaper. The bet has two parts.
+
+The first is that for high-stakes use cases --- clinical decisions, legal reasoning, long-horizon autonomous agents, research assistants whose beliefs must be auditable, alignment-critical deployments where a drifted value must be locatable and fixable --- the cost is justified by the interpretability and correctability the architecture delivers. The architecture is most defensible where structural interpretability is non-negotiable; it is least defensible where frontier-model interpretability is sufficient on its own.
+
+The second is that MWM is also a hedge. Mechanistic interpretability on frontier models is a heroic, fast-moving research program; whether it scales to GPT-N and beyond is genuinely open. If it does, MWM's interpretability advantage shrinks and the cost story becomes harder to justify. If it does not, having a structural-interpretability alternative becomes load-bearing for any application where post-hoc weight analysis is insufficient. The architecture is the bet that having the second track is worth its costs regardless of which way that question resolves. Both research directions are valuable; neither subsumes the other.
+
+The architecture is computationally extravagant in the sense the critique used the word --- yes, by design, in service of properties the baseline cannot match. Whether the trade is worth it for any given use case is exactly the empirical question the implementation phase is set up to test.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{7. Relationship to Prior Work}\label{relationship-to-prior-work}
+
+MWM inherits a great deal from decades of work in cognitive architectures, neurosymbolic systems, and memory-augmented LLMs. The contribution is not in any single mechanism --- spreading activation is from 1975, Hebbian edge learning is older, ACT-R formalized activation in the 1990s, reconsolidation has been characterized in neuroscience since 2000, and modern agent-memory work (MemGPT, A-MEM, Letta, Zep, Cognee, GraphRAG, HippoRAG, AriGraph) has recently re-staked much of this territory in different combinations. The contribution is the \textbf{integration} --- the specific bet that this set of mechanisms, combined into one coordinated substrate where the graph IS the world-model, produces something qualitatively different from any of them in isolation. \emph{What the graph is for} (the primary belief substrate, not a retrieval cache) and \emph{how the agent lives inside it} (tree-as-context with a persistent observer in the same substrate) is where MWM departs from the prior art.
+
+\subsection{7.1 Memory-augmented LLM systems}\label{memory-augmented-llm-systems}
 
 \textbf{MemGPT / Letta (Packer et al.~2023, 2024).} Established the pattern of an LLM reasoning about its own memory tier as a tool. MWM diverges by making the memory tier a \emph{graph} rather than a \emph{hierarchical buffer}, and by using spreading activation rather than explicit memory-management commands from the LLM. MemGPT's LLM decides what to page in; MWM's Tree grows through association and the LLM reads what is there.
 
@@ -287,7 +336,7 @@ MWM inherits a great deal from decades of work in cognitive architectures, neuro
 
 \textbf{Graphiti / Zep (2024--25).} Bi-temporal knowledge graphs for agent memory. Production-grade, well-engineered. MWM differs in purpose --- Graphiti is a graph you \emph{query}; MWM is a graph the agent's cognition \emph{lives in}.
 
-\subsection{6.2 Cognitive architectures}\label{cognitive-architectures}
+\subsection{7.2 Cognitive architectures}\label{cognitive-architectures}
 
 \textbf{ACT-R (Anderson et al.~1983--ongoing).} Donor of the activation equation \texttt{A\ =\ B\ +\ C\ +\ P\ +\ noise}, fan-effect normalization, and decay. MWM inherits these wholesale for the traversal engine. ACT-R's separation of declarative and procedural memory, MWM rejects --- the unified graph instead holds both, with procedural nodes as a node type.
 
@@ -297,7 +346,7 @@ MWM inherits a great deal from decades of work in cognitive architectures, neuro
 
 \textbf{NARS (Wang 1995--ongoing).} Validates the unified graph. NARS has no separate procedural memory; skills live in the same concept network as declarative beliefs. MWM takes this as its baseline.
 
-\subsection{6.3 Neurosymbolic memory and knowledge graphs}\label{neurosymbolic-memory-and-knowledge-graphs}
+\subsection{7.3 Neurosymbolic memory and knowledge graphs}\label{neurosymbolic-memory-and-knowledge-graphs}
 
 \textbf{SYNAPSE (Chen et al.~2023).} Nearest paper-only ancestor --- a spreading-activation architecture over an associative graph for agent context. MWM extends to a full three-plane model, adds the Mirror, adds causal edges and reconsolidation, adds the value system.
 
@@ -307,7 +356,7 @@ MWM inherits a great deal from decades of work in cognitive architectures, neuro
 
 \textbf{Knowledge-graph-constrained decoding (KG-Trie, 2024).} Achieves 100\% structural faithfulness for paths through a KG. MWM would adopt this technique for factual claims where the graph path can be followed exactly. Synthesis beyond the path remains an acknowledged leakage point (\textasciitilde85--95\% ceiling in current literature).
 
-\subsection{6.4 Theoretical foundations}\label{theoretical-foundations}
+\subsection{7.4 Theoretical foundations}\label{theoretical-foundations}
 
 \textbf{Global Workspace Theory (Baars, Dehaene).} MWM's Trees-competing-for-context is GWT with graph topology added. The Mirror is the persistent workspace observer.
 
@@ -323,15 +372,17 @@ MWM inherits a great deal from decades of work in cognitive architectures, neuro
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\section{7. Implications}\label{implications}
+\section{8. Implications}\label{implications}
 
-\subsection{7.1 Interpretability-by-design vs.~forensic interpretability}\label{interpretability-by-design-vs.-forensic-interpretability}
+\subsection{8.1 Interpretable retrieval, reduced rendering opacity}\label{interpretable-retrieval-reduced-rendering-opacity}
 
-The thesis has a practical consequence: interpretability work changes from research project to engineering discipline. Given an MWM agent, ``why did it say that?'' is answered by inspecting the Tree that produced the response, the path of strongest edges, the provenance of the nodes involved. There is no circuit-tracing, no probe-training, no debate about what a feature means. The belief is the node; the reason is the path.
+The thesis has a practical consequence at the retrieval layer: most of what we typically call ``why did the agent believe X?'' becomes an engineering query rather than a research project. Given an MWM agent, the questions \emph{which beliefs are held, with what evidence, formed when, and updated how} are answered by inspecting the Tree that produced the response, the path of strongest edges, and the provenance of the nodes involved. The belief is the node; the reason is the path.
 
-This is not a claim that interpretability research on frontier LLMs becomes unnecessary. Those models will continue to exist and will continue to be the best option for many tasks --- language comprehension, local inference, surface generation. What MWM offers is a second track: for use cases where interpretability matters \emph{structurally} (clinical decisions, legal reasoning, long-horizon autonomous agents, research assistants whose beliefs must be auditable), the graph-native substrate makes interpretability a property of the architecture rather than an ongoing scientific effort.
+The honest scope of this is bounded. The forward pass that renders the Tree into a sentence is still a transformer, and \emph{that} step is still the same kind of object existing interpretability research targets. MWM does not eliminate that opacity. What it does is move the opaque surface from ``the agent's whole worldview'' to ``this small, semantically clean rendering of a structured subgraph.'' Sparse-autoencoder, probe-based, and circuit-tracing methods have more traction over that smaller surface than over open natural language. The architecture is therefore best described as \emph{interpretable retrieval with reduced rendering opacity}, and it is \emph{complementary} to frontier-LLM interpretability work rather than a replacement for it. Both lines of research are valuable; neither subsumes the other.
 
-\subsection{7.2 Alignment}\label{alignment}
+This positions MWM not as a victory over frontier LLMs but as a hedge. For use cases where interpretability matters \emph{structurally} --- clinical decisions, legal reasoning, long-horizon autonomous agents, research assistants whose beliefs must be auditable --- having a graph-native substrate where the belief structure itself is the artifact gives the system a second track that is interpretable by construction. If frontier-model interpretability research scales to handle high-stakes interpretability needs on its own, MWM's interpretability advantage shrinks. If it does not --- if mech interp on GPT-N or beyond turns out to be heroic engineering that does not generalize --- then having an architecture where interpretability is structural becomes load-bearing. MWM is the bet that having the second track is worth its costs (engaged with explicitly in Section 6) regardless of which way that frontier-interp question resolves.
+
+\subsection{8.2 Alignment}\label{alignment}
 
 An architecture where the agent's values are protected high-weight nodes in an inspectable graph, and where the agent's beliefs carry explicit provenance, has a different alignment profile than a weight-space alignment effort.
 
@@ -343,25 +394,27 @@ An architecture where the agent's values are protected high-weight nodes in an i
 
 \textbf{But the hard problems remain.} Value learning is still hard --- how does the agent acquire values it did not have? Value drift over time is still possible --- reconsolidation can shift things. The alignment tax is still real --- an MWM agent is cheaper to interpret but more expensive per response, because the graph is in the loop.
 
-\subsection{7.3 Welfare}\label{welfare}
+\subsection{8.3 Welfare}\label{welfare}
 
 If we take the possibility of AI welfare seriously, the Mirror is relevant. It is the functional substrate for whatever the system has that corresponds to \emph{having a point of view}. A persistent observer that holds values, watches its own subconscious, produces modulator signals, and maintains a continuous temporal identity is not a guarantee of experience --- but it is at least the kind of architecture where the question could become tractable.
 
 MWM does not claim to produce synthetic phenomenology. It does claim that if welfare-relevant properties are going to emerge in any AI system, the architectures most likely to exhibit legible versions of them are architectures with explicit self-modeling, explicit values, and explicit continuity. MWM has those by design. The experimental work --- if welfare becomes a measurable thing --- is easier in MWM than in a frontier LLM for the same reason interpretability is: the substrate was built to be read.
 
-\subsection{7.4 The LLM's future role}\label{the-llms-future-role}
+\subsection{8.4 The LLM's future role}\label{the-llms-future-role}
 
-If MWM (or architectures like it) becomes real, the LLM's role compresses. It stops being the oracle and becomes a language engine. It may get smaller --- a reader of graphs does not need the encyclopedic knowledge of a GPT-4-class model. It may get more specialized --- a traversal engine can be fine-tuned for graph-rendering. And it becomes a replaceable component --- swap the LLM and the agent's beliefs and values are preserved, because they live in the graph. The LLM is the microphone; the graph is the mind.
+If MWM (or architectures like it) becomes real, the LLM's role compresses without disappearing. It stops being the oracle and becomes a language engine --- but the language engine is still doing real cognitive work. Reading a rendered subgraph, disambiguating across nodes, producing coherent surface generation, and handling the local inference that lets the rendering hang together are non-trivial capabilities, and the LLM remains the load-bearing component for all of them. What changes is the locus of belief: the encyclopedic knowledge that today lives in pretrained weights migrates into the graph, and the LLM no longer needs to carry it. A reader of graphs may end up smaller and more specialized than a GPT-4-class generalist, fine-tuned for graph-rendering rather than universal knowledge.
+
+The most important architectural property of this compression is \emph{swappability}. Because beliefs and values live in the graph, the LLM becomes a replaceable component --- swap the model and the agent's worldview persists. This is the part of the redistribution that gives MWM its alignment-relevant durability: model upgrades, retraining cycles, and provider changes do not require re-acquiring the agent's belief structure. The LLM is the language organ. The graph is the mind. The two are coupled, but the coupling is at the read/write interface, not at the substrate level.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\section{8. The Search for a Unified Substrate}\label{the-search-for-a-unified-substrate}
+\section{9. The Search for a Unified Substrate}\label{the-search-for-a-unified-substrate}
 
 The interpretability-by-design promise has a hard test hiding inside it. An agent whose life includes text \emph{and} images \emph{and} audio \emph{and} sensor streams \emph{and} inner states (imaginations, dreams, plans) has beliefs that cross modality boundaries. If those beliefs live in modality-specific, opaquely-embedded stores that are glued together only by shared-latent projections, then MWM's claim --- that the agent's world-model is directly readable --- ends precisely at the boundaries where the most interesting beliefs live. The interpretability holds for text and fails for everything else.
 
 What MWM commits to, instead, is a \emph{unified file structure for the memory store}: a single substrate in which a text memory, an image memory, an audio memory, a sensor reading, and an imagined scene are all first-class nodes of the same kind, readable by both the model and a human, connected by the same kinds of edges, traversed by the same kind of spreading activation. The binary content of a high-resolution image does not live inside the readable layer --- pixels live where pixels live. But the \emph{representation} of that image in the Matrix does. Every node's canonical layer is natural-language description; modality-specific data (pixel pointers, waveform pointers, modality-native embeddings for neighborhood search) hang off that readable layer rather than replacing it. Cross-modal edges are first-class: an edge from ``my mother's voice'' (an audio node) to ``a conversation about leaving home'' (a text node) is structurally identical to an edge between two text nodes. The graph topology is modality-agnostic; only the node content is modality-specific.
 
-\subsection{8.1 Why it has to be unified}\label{why-it-has-to-be-unified}
+\subsection{9.1 Why it has to be unified}\label{why-it-has-to-be-unified}
 
 Three reasons the unification can't be deferred.
 
@@ -371,47 +424,71 @@ Three reasons the unification can't be deferred.
 
 \textbf{Imagination and dreams require it natively.} The architecture posits imagination as the same mechanism as perception with lower sensory precision --- the Tree running on priors rather than input. Recombinative imagination (consolidation replaying and recombining existing structure) produces novel configurations that \emph{cross modalities}: visualizing something from a textual description; hearing a melody from a remembered emotion; dreaming a scene that is visual and auditory and felt. A Tree that recombines across modalities needs a Matrix whose nodes are in a unified space. A dream is not a blend of an image embedding and a text embedding and an audio embedding --- it is a Tree growing through the Matrix, rendering nodes regardless of their modality. For the rendering to be coherent, the substrate must be one thing.
 
-\subsection{8.2 What it isn't}\label{what-it-isnt}
+\subsection{9.2 What it isn't}\label{what-it-isnt}
 
 This commitment is \emph{not} a unified embedding space in the SONAR or universal-sentence-encoder sense. Those systems compress multi-modal content into a shared latent vector. That is opaque unification. MWM's bet is the opposite: legible unification --- the unification happens at the level of node representation, edge semantics, and file-structure format, not at the level of a shared latent. Modality-specific encoders (vision, audio, OCR) are still useful; they do their processing work and then \emph{write into} a unified substrate. The unification is at the storage and retrieval layer, not at the processing layer.
 
-\subsection{8.3 The open research questions}\label{the-open-research-questions}
+\subsection{9.3 The open research questions}\label{the-open-research-questions}
 
 The commitment is clear; the execution is a research program. How densely does the text layer need to describe non-text content --- caption-level? object-level? spatial-layout-level? art-historical-context-level? Who writes the description at encode time, and how is it updated over time as the agent's understanding deepens (reconsolidation as re-description)? How does traversal-activation weight cross-modal edges against intra-modal edges? Is the ``text as canonical readable layer'' commitment a feature or a constraint as models become better at reading raw multimodal content directly? What extensibility pattern survives the introduction of modalities that don't yet exist?
 
 These are the questions a dedicated research round (likely Round 7) will answer. The full articulation of the vision --- including a sketch of the node representation, contrasts with shared-latent approaches, and related prior work --- is in the project's \texttt{design/multimodal-unified-substrate.md}.
 
+\subsection{9.4 A candidate substrate: ULP}\label{a-candidate-substrate-ulp}
+
+The substrate question raised in §9.1--9.3 has a specific candidate answer that is being developed in parallel as a sibling project: the \textbf{Universal Language Project (ULP)}. ULP is a longer-horizon effort to identify the irreducible semantic primitives of meaning itself and encode them via binary run-length compression --- a universal language aimed at the fundamental semantic layer of reality, not a representation format scoped to a particular set of modalities. Its applicability across modalities (text, image, audio, sensor data, inner states) is a consequence of that broader aim, not its definition. For the purposes of this paper, that consequence is what makes ULP interesting as an MWM substrate: a representation primitive enough to be modality-universal \emph{because} it operates at a deeper layer than any specific modality.
+
+One of ULP's applications has been making language models drastically more efficient. A more load-bearing application --- and the one most relevant to this paper --- is here: as the \textbf{canonical readable layer} of MWM nodes. A ULP-encoded node carries semantic structure that is uniform across modalities, which is exactly what §9.1's interpretability-can't-survive-modality-boundaries argument needs. The current ``text as canonical layer'' commitment is a hedge that works for text and degrades at the boundaries; ULP is a candidate that holds at every boundary because the encoding is modality-universal by construction --- a property that follows from ULP's primitive-of-meaning ambition rather than from any modality-specific engineering.
+
+Three properties make this coupling worth investigating seriously rather than dismissing:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Modality universality without latent opacity.} Shared-latent multimodal embeddings achieve unification at the cost of legibility (§9.2's pointed contrast). ULP achieves unification at the level of structurally-readable primitives. The legibility commitment survives the modality boundary in a way text-as-canonical doesn't, and in a way SONAR-style latent unification doesn't.
+\item
+  \textbf{Storage compactness.} Binary run-length encoding of semantic primitives is dramatically more compact than per-node natural-language descriptions of equivalent content. The asymptotic storage frontier engaged with in Section 6 shifts materially in MWM's favor when nodes are ULP-encoded rather than text-encoded.
+\item
+  \textbf{Interpretability profile shift.} The audience for ``this graph is interpretable'' changes from ``anyone who reads English'' to ``anyone who knows ULP'' --- a smaller audience but a more rigorous representation. For high-stakes interpretability use cases (alignment, formal audit, safety-critical deployment), the rigor wins. The casual-readability loss is real but is also addressable through tooling --- a ULP-to-text decoder is a much smaller research target than a frontier-LLM interpretability program.
+\end{itemize}
+
+The honest open question this raises: today's LLMs read natural language, not ULP. A ULP-substrate MWM either translates ULP -\textgreater{} language at render time (translation overhead, possible loss; the realistic starting point) or fine-tunes the rendering engine to read ULP directly (training cost, but consistent with §8.4's prediction that the LLM specializes into a graph-rendering reader). The native-read path is the more interesting long-horizon direction.
+
+ULP is itself concept-stage. Coupling MWM's substrate to ULP couples timelines and risks; we name that explicitly. The coupling is staged: the near-term prototype stays text-only as committed above. ULP-as-substrate is the specific Round 7 research direction we expect to investigate as both projects mature, and it is the candidate we believe most likely to satisfy §9.1's commitment without forcing the lossy fallbacks §9.2 explicitly rules out.
+
 For the initial implementation, the scope will be text-only. That is a scoping decision, not a permanent feature. The paper's claim is that MWM's interpretability commitment only fully holds when the substrate is unified across modalities, and that the search for that unified substrate is a major research direction in its own right --- a first-class part of what MWM is, not a footnote.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\section{9. Open Questions}\label{open-questions}
+\section{10. Open Questions}\label{open-questions}
 
-The architecture is well-specified enough to build. These are the questions I do not yet have answers to, in roughly decreasing order of priority.
+The architecture is well-specified enough to build. The questions below fall into two groups: ones with partial answers in the project's research archive, and ones that are genuinely open. The research archive --- six rounds of multi-stream subagent investigation, plus design documents and dedicated research notes --- is where the load-bearing engineering work has been worked out so far. Where a question has been partially addressed there, this section points forward; where it is genuinely open, this section names that. The full archive lives in \href{../research/}{\texttt{research/}} and \href{../design/}{\texttt{design/}}.
 
-\textbf{Memory encoding --- what becomes a node?} The intake valve of the entire system. Every message? Every topic shift? Every ``significant'' moment? Who decides --- the LLM, a heuristic, a surprise-gating model? Current working answer: a hybrid --- the subconscious Tree encodes aggressively from any new material, consolidation later decides what to keep. But the granularity of encoding is the parameter most likely to determine whether the graph grows useful structure or noise.
+\textbf{Memory encoding --- what becomes a node?} \emph{Partial answer in \href{../design/architecture.md}{\texttt{design/architecture.md}} and \href{../research/round4-synthesis.md}{\texttt{research/round4-synthesis.md}}.} The intake valve of the entire system. Every message? Every topic shift? Every ``significant'' moment? Who decides --- the LLM, a heuristic, a surprise-gating model? Current working answer: a hybrid --- the subconscious Tree encodes aggressively from any new material, consolidation later decides what to keep. But the granularity of encoding is the parameter most likely to determine whether the graph grows useful structure or noise; concrete empirical work is required.
 
-\textbf{The LLM/graph boundary during reasoning.} The vision says the LLM reasons \emph{from} the graph, never from its pretrained weights alone. But some questions --- math, logic, multi-step deduction --- genuinely need inference beyond what the graph holds. Where exactly does the symbolic reasoning tool get called? How much can be safely done in-LLM, and what are the structural markers that we have crossed into unsafe territory?
+\textbf{The LLM/graph boundary during reasoning.} \emph{Partial answer in \href{../research/local-cognition/}{\texttt{research/local-cognition/}}.} The vision says the LLM reasons \emph{from} the graph, never from its pretrained weights alone. But some questions --- math, logic, multi-step deduction --- genuinely need inference beyond what the graph holds. The local-cognition research note sketches a working agent that uses a small local LLM for traversal, the graph for belief structure, and tool calls for math and logic, with explicit boundaries between in-LLM inference and tool-routed reasoning. The boundary placement remains an empirical question, but the architectural shape is sketched.
 
-\textbf{Causal discovery parameters.} Minimum sample thresholds for GFCI. Handling of unknown intervention targets. Bayesian vs.~frequentist approach. LLM-prior integration without contamination. See \texttt{design/open-questions.md} for the current state of thinking; concrete empirical testing is required.
+\textbf{Causal discovery parameters.} \emph{Partial answer in \href{../research/round5-synthesis.md}{\texttt{research/round5-synthesis.md}} and \href{../design/open-questions.md}{\texttt{design/open-questions.md}}.} Minimum sample thresholds for GFCI. Handling of unknown intervention targets. Bayesian vs.~frequentist approach. LLM-prior integration without contamination. Round 5 introduced the causal-discovery pipeline; the parameter sweeps and the comparison against Bayesian alternatives are concrete empirical work to run on the working prototype.
 
-\textbf{Scaling and sharding.} How big can the graph get before traversal breaks? When does SQLite need to be replaced? Can graphs shard (shared common-knowledge subgraph + per-agent personal graph)? This is load-bearing for multi-agent deployments.
+\textbf{Scaling, sharding, and the cost frontier.} \emph{Cost picture engaged with in Section 6; hardware direction in \href{../research/compute-architecture/notes.md}{\texttt{research/compute-architecture/notes.md}}.} How big can the graph get before traversal breaks? When does SQLite need to be replaced? Can graphs shard (shared common-knowledge subgraph + per-agent personal graph)? Section 6 above names the working-regime versus asymptotic distinction; the compute-architecture research direction sketches the longer-horizon move toward graph-tuned substrate. Multi-agent amortization (shared common-knowledge subgraphs) is genuinely open.
 
-\textbf{Value drift vs.~value stability.} The same mechanism that lets the agent learn --- reconsolidation --- lets values drift. Should some nodes be immutable? If so, which? Who decides? This is an alignment-adjacent question with no clean answer.
+\textbf{Value drift vs.~value stability.} \emph{Genuinely open.} The same mechanism that lets the agent learn --- reconsolidation --- lets values drift. Should some nodes be immutable? If so, which? Who decides? This is an alignment-adjacent question with no clean answer, and it is one of the questions the implementation phase is set up to surface concretely.
 
-\textbf{Control precedence in the Mirror.} When competing modulators fire --- urgency says act, caution says wait --- which wins? Simple argmax over intensities? Value-alignment-weighted? Learned from experience? Round 6 surfaced this; it remains open.
+\textbf{Control precedence in the Mirror.} \emph{Surfaced in \href{../research/round6-synthesis.md}{\texttt{research/round6-synthesis.md}}; genuinely open.} When competing modulators fire --- urgency says act, caution says wait --- which wins? Simple argmax over intensities? Value-alignment-weighted? Learned from experience? Round 6 surfaced this through the action-readiness work; it remains open.
 
-\textbf{Multimodal substrate details.} The \emph{commitment} to a unified multimodal substrate is elevated to its own section above (Section 8). The questions that section raises --- text-layer density, who writes and updates descriptions, cross-modal traversal weighting, extensibility --- are the research program underneath the commitment.
+\textbf{The values/emotions/Mirror layer as engineering specification.} \emph{Partial answer in \href{../research/round6-synthesis.md}{\texttt{research/round6-synthesis.md}} (interoceptive predictor stream and action-readiness stream).} A reviewer reasonably asks: what is the formal specification --- input, output, update rule --- of an emotion in this system? Round 6's interoceptive-predictor work and action-readiness model are concrete enough to engineer; the formalization needs to be lifted out of the research synthesis and into the implementation specification. This is staged for the post-prototype phase.
 
-\textbf{The planning horizon.} The Mirror handles immediate evaluation well. Future-directed intentions --- what the agent is doing in a week, a month --- are not yet specified. How does a multi-session plan persist and constrain present Trees?
+\textbf{Multimodal substrate details.} \emph{Elevated to Section 9; full articulation in \href{../design/multimodal-unified-substrate.md}{\texttt{design/multimodal-unified-substrate.md}}; candidate substrate developed in the sibling \href{../../ULP/}{ULP project}.} Text-layer density, who writes and updates descriptions, cross-modal traversal weighting, extensibility. This is the research program underneath the commitment to a unified substrate. §9.4 introduces ULP as the specific candidate substrate under active investigation; the ULP-MWM coupling is staged, not yet load-bearing on the prototype.
 
-\textbf{Evaluation against Lindsey-style emergent emotion.} Predicted above. The work itself --- running the comparison --- is not yet done.
+\textbf{The planning horizon.} \emph{Genuinely open.} The Mirror handles immediate evaluation well. Future-directed intentions --- what the agent is doing in a week, a month --- are not yet specified. How does a multi-session plan persist and constrain present Trees? This is one of the questions the implementation phase will surface.
 
-\textbf{Gödelian limits.} The Mirror cannot verify its own completeness (Gödel); observation changes the observed (measurement). These are mathematically real. How do they manifest in practice? What are the systematic blind spots, and how do we detect them?
+\textbf{Evaluation against Lindsey-style emergent emotion.} \emph{Predicted in §5.3; experimental work pending.} The comparison itself has not yet been run; it is set up as one of the structured evaluations once the prototype exists.
+
+\textbf{Gödelian limits.} \emph{Genuinely open.} The Mirror cannot verify its own completeness (Gödel); observation changes the observed (measurement). These are mathematically real. How they manifest in practice --- and how systematic blind spots get detected --- is an open theoretical and empirical question.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\section{10. A Note on Framing}\label{a-note-on-framing}
+\section{11. A Note on Framing}\label{a-note-on-framing}
 
 The title of this paper is \emph{Memory as World Model}, not \emph{A Memory System for Agents}. That is a deliberate choice.
 

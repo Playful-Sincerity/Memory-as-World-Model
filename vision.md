@@ -61,7 +61,7 @@ This is deeper than anti-hallucination. The architecture gives the agent a meta-
 
 When the graph is empty (cold start), the agent is in its most curious state — everything is new, everything is worth encoding, every conversation is building the first branches of a worldview. The empty graph isn't a limitation. It's the beginning of a mind.
 
-Over time, as the experiential graph grows, the agent increasingly answers from its own lived structure. The base model becomes the engine; the graph becomes the mind. Eventually the model is almost interchangeable — what matters is the graph.
+Over time, as the experiential graph grows, the agent increasingly answers from its own lived structure. The base model becomes the engine; the graph becomes the mind. The LLM's role *compresses* — it is no longer the locus of belief, only the locus of language and local inference — but it does not become interchangeable. Language understanding, surface generation, and the disambiguation that lets the LLM read a rendered subgraph at all are still doing real cognitive work. The bet is not that the LLM disappears; it is that the LLM stops carrying the truth.
 
 ## How Associations Form
 
@@ -105,14 +105,17 @@ Language is the first modality. But a node can be an image, a sound, a video, a 
 
 ## What Makes This Novel
 
-After auditing 65+ systems across three research rounds (see research/):
+The individual mechanisms have lineage. Spreading activation is from Collins & Loftus (1975). Hebbian/PMI association graphs were studied through LSA, HAL, and the early-2000s distributional-semantics tradition. ACT-R formalized activation in the 1990s. Reconsolidation is well-established in neuroscience (Nader 2000, Hupbach 2007). Modern agent-memory work — MemGPT, A-MEM, Letta, Zep, Cognee, GraphRAG, HippoRAG, AriGraph — has recently re-staked much of this territory in different combinations. None of these mechanisms is being claimed as new here.
 
-1. No production system treats the memory graph as the primary world model replacing pretrained knowledge
-2. No system implements tree-as-context — growing subgraph IS the context, not flattened for retrieval
-3. No system uses Hebbian co-occurrence (PMI) as primary navigation metric in agent memory
-4. No system has parallel growing trees sharing a context budget
-5. No system implements meta-cognitive self-perception in the same graph substrate
-6. No system implements dual-axis confidence (comprehension × completeness)
-7. No system uses memory reconsolidation (every retrieval modifies the memory) as a first-class primitive
+The novelty is the **integration** — the specific bet that all of these pieces, combined into a single coordinated substrate, produce something qualitatively different from any of them in isolation. After auditing 65+ systems across three research rounds (see research/), what we have not seen elsewhere is the full combination of:
 
-The novelty is epistemological, not mechanical. The individual mechanisms (spreading activation, PMI, ACT-R decay) are well-established. The contribution is a new answer to the question: "what IS memory for an AI agent?" Not a database the agent consults — the terrain the agent's cognition grows through. The structure it thinks within. The interpretable substrate of its worldview.
+- A graph that is the agent's primary belief substrate (not a retrieval cache on top of an LLM)
+- Tree-as-context — the rendered subgraph IS the working memory, not flattened for retrieval
+- A persistent observer (the Mirror) that holds values, produces modulator signals, and lives in the *same* substrate as the world-model
+- Causal edges as first-class (Pearl Layer 2), alongside co-occurrence and affordance edges
+- Reconsolidation as the learning mechanism — every traversal is a write
+- Earned conviction as a structural property of the graph, not the LLM's surface confidence
+
+Each of these has prior art individually. The integration is what we believe is new, and what is interesting is whether the integration produces emergent properties — interpretability-by-design, anti-hallucination as a structural property, value-alignment as topology — that the individual components cannot.
+
+The contribution is a new answer to the question: "what IS memory for an AI agent?" Not a database the agent consults — the terrain the agent's cognition grows through. The structure it thinks within. The interpretable substrate of its worldview.
